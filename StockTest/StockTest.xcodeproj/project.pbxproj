@@ -14,6 +14,8 @@
 		BB37A98D25D514A700E5E4DC /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB37A98C25D514A700E5E4DC /* Persistence.swift */; };
 		BB37A99025D514A700E5E4DC /* StockTest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BB37A98E25D514A700E5E4DC /* StockTest.xcdatamodeld */; };
 		BB37A99A25D5A89100E5E4DC /* StockPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB37A99925D5A89100E5E4DC /* StockPrice.swift */; };
+		BB37A99E25D5AB5A00E5E4DC /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB37A99D25D5AB5A00E5E4DC /* String+Extension.swift */; };
+		BB37A9A225D5AC4700E5E4DC /* Stocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB37A9A125D5AC4700E5E4DC /* Stocks.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		BB37A98F25D514A700E5E4DC /* StockTest.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StockTest.xcdatamodel; sourceTree = "<group>"; };
 		BB37A99125D514A700E5E4DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB37A99925D5A89100E5E4DC /* StockPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockPrice.swift; sourceTree = "<group>"; };
+		BB37A99D25D5AB5A00E5E4DC /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String+Extension.swift"; path = "StockTest/Helpers/String+Extension.swift"; sourceTree = SOURCE_ROOT; };
+		BB37A9A125D5AC4700E5E4DC /* Stocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Stocks.swift; path = StockTest/Networking/Stocks.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +62,9 @@
 		BB37A98225D514A300E5E4DC /* StockTest */ = {
 			isa = PBXGroup;
 			children = (
+				BB37A9A025D5ABF100E5E4DC /* Helpers */,
+				BB37A99C25D5AA8300E5E4DC /* Model */,
+				BB37A9A425D5AFD400E5E4DC /* Networking */,
 				BB37A98325D514A300E5E4DC /* StockTestApp.swift */,
 				BB37A98525D514A300E5E4DC /* ContentView.swift */,
 				BB37A98725D514A700E5E4DC /* Assets.xcassets */,
@@ -65,7 +72,6 @@
 				BB37A99125D514A700E5E4DC /* Info.plist */,
 				BB37A98E25D514A700E5E4DC /* StockTest.xcdatamodeld */,
 				BB37A98925D514A700E5E4DC /* Preview Content */,
-				BB37A99C25D5AA8300E5E4DC /* Model */,
 			);
 			path = StockTest;
 			sourceTree = "<group>";
@@ -84,6 +90,22 @@
 				BB37A99925D5A89100E5E4DC /* StockPrice.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		BB37A9A025D5ABF100E5E4DC /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				BB37A99D25D5AB5A00E5E4DC /* String+Extension.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		BB37A9A425D5AFD400E5E4DC /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				BB37A9A125D5AC4700E5E4DC /* Stocks.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -155,7 +177,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB37A99E25D5AB5A00E5E4DC /* String+Extension.swift in Sources */,
 				BB37A98D25D514A700E5E4DC /* Persistence.swift in Sources */,
+				BB37A9A225D5AC4700E5E4DC /* Stocks.swift in Sources */,
 				BB37A98625D514A300E5E4DC /* ContentView.swift in Sources */,
 				BB37A99A25D5A89100E5E4DC /* StockPrice.swift in Sources */,
 				BB37A99025D514A700E5E4DC /* StockTest.xcdatamodeld in Sources */,
