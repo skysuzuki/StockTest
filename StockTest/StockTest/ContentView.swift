@@ -7,6 +7,8 @@
 
 import SwiftUI
 import CoreData
+import Combine
+import SwiftUICharts
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -16,22 +18,40 @@ struct ContentView: View {
         animation: .default)
     private var items: FetchedResults<Item>
 
-    var body: some View {
-        List {
-            ForEach(items) { item in
-                Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-            }
-            .onDelete(perform: deleteItems)
-        }
-        .toolbar {
-            #if os(iOS)
-            EditButton()
-            #endif
+    @ObservedObject var stocks = Stocks()
 
-            Button(action: addItem) {
-                Label("Add Item", systemImage: "plus")
-            }
-        }
+    let stockList = [
+    StockView(symbol: "BCRX", price: 56.89, description: "Biocryst", change: "-0.35"),
+    StockView(symbol: "CRSR", price: 59.89, description: "Corsair", change: "-0.42")
+    ]
+
+    var body: some View {
+
+        NavigationView{
+//        LineView(data: stocks.prices, title: "IBM", legend: "Full Screen")
+//            .padding()
+//        LineView(data: stocks.prices, title: "IBM", price: "\(stocks.currentPrice) INR")
+//            .padding()
+
+            StockList(stocks: stockList)
+
+//        List {
+//            ForEach(items) { item in
+//                Text("Item at \(item.timestamp!, formatter: itemFormatter)")
+//            }
+//            .onDelete(perform: deleteItems)
+//        }
+//        .toolbar {
+//            #if os(iOS)
+//            EditButton()
+//            #endif
+//
+//            Button(action: addItem) {
+//                Label("Add Item", systemImage: "plus")
+//            }
+//        }
+        .navigationBarTitle("Stocks")
+    }
     }
 
     private func addItem() {

@@ -11,18 +11,22 @@ import Combine
 class Stocks: ObservableObject {
 
     @Published var prices = [Double]()
-    @Published var currentPrice = ""
-    var urlBase = "https://www.alphavantage.co/query?function= FUCTION&SYMBOL&APIKEY"
-
+    @Published var currentPrice = "...."
+    var urlBase = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=00HW87JZWQ30BPUN"
+    //https://www.alphavantage.co/query?function=TIME_SERIES_DILY&symbol=TESLA&"
     var cancellable: Set<AnyCancellable> = Set()
 
+    //private var apiKey = "apikey=00HW87JZWQ30BPUN"
+
+    //https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=demo
     init() {
         fetchStockPrice()
     }
 
     func fetchStockPrice() {
 
-        URLSession.shared.dataTaskPublisher(for: URL(string: "\(urlBase)")!)
+        //let url = URL(string: urlBase + apiKey)!
+        URLSession.shared.dataTaskPublisher(for: URL(string: urlBase)!)
             .map { output in
                 return output.data
             }
