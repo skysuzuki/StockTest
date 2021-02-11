@@ -20,38 +20,40 @@ struct ContentView: View {
 
     @ObservedObject var stocks = Stocks()
 
-    let stockList = [
-    StockView(symbol: "BCRX", price: 56.89, description: "Biocryst", change: "-0.35"),
-    StockView(symbol: "CRSR", price: 59.89, description: "Corsair", change: "-0.42")
-    ]
+    init() {
+        stocks.fetchStockViews()
+    }
 
     var body: some View {
 
+        let stockViews = stocks.stockViews
+
         NavigationView{
-//        LineView(data: stocks.prices, title: "IBM", legend: "Full Screen")
-//            .padding()
-//        LineView(data: stocks.prices, title: "IBM", price: "\(stocks.currentPrice) INR")
-//            .padding()
+            //        LineView(data: stocks.prices, title: "IBM", legend: "Full Screen")
+            //            .padding()
+            //        LineView(data: stocks.prices, title: "IBM", price: "\(stocks.currentPrice) INR")
+            //            .padding()
 
-            StockList(stocks: stockList)
+            StockList(stocks: stockViews)
 
-//        List {
-//            ForEach(items) { item in
-//                Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-//            }
-//            .onDelete(perform: deleteItems)
-//        }
-//        .toolbar {
-//            #if os(iOS)
-//            EditButton()
-//            #endif
-//
-//            Button(action: addItem) {
-//                Label("Add Item", systemImage: "plus")
-//            }
-//        }
-        .navigationBarTitle("Stocks")
-    }
+                //        List {
+                //            ForEach(items) { item in
+                //                Text("Item at \(item.timestamp!, formatter: itemFormatter)")
+                //            }
+                //            .onDelete(perform: deleteItems)
+                //        }
+                //        .toolbar {
+                //            #if os(iOS)
+                //            EditButton()
+                //            #endif
+                //
+                //            Button(action: addItem) {
+                //                Label("Add Item", systemImage: "plus")
+                //            }
+                //        }
+                .navigationBarTitle("Stocks")
+
+        }.edgesIgnoringSafeArea(Edge.Set(.bottom))
     }
 
     private func addItem() {

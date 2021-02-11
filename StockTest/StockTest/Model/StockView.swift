@@ -7,9 +7,14 @@
 
 import Foundation
 
-struct StockView {
+struct StockView: Codable {
     let symbol: String
-    let price: Float
-    let description: String
+    let price: String
     let change: String
+
+    private enum CodingKeys: String, CodingKey {
+        case symbol = "01. symbol"
+        case price = "05. price"
+        case change = "09. change"
+    }
 }

@@ -20,12 +20,9 @@ struct StockList: View {
 
 struct StockList_Previews: PreviewProvider {
     static var previews: some View {
-        let stocks = [
-        StockView(symbol: "BCRX", price: 56.89, description: "Biocryst", change: "-0.35"),
-        StockView(symbol: "CRSR", price: 59.89, description: "Corsair", change: "-0.42")
-        ]
+        let stocks = Stocks()
 
-        StockList(stocks: stocks)
+        StockList(stocks: stocks.stockViews)
     }
 }
 
