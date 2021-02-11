@@ -13,6 +13,7 @@
 		BB37A98B25D514A700E5E4DC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB37A98A25D514A700E5E4DC /* Preview Assets.xcassets */; };
 		BB37A98D25D514A700E5E4DC /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB37A98C25D514A700E5E4DC /* Persistence.swift */; };
 		BB37A99025D514A700E5E4DC /* StockTest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BB37A98E25D514A700E5E4DC /* StockTest.xcdatamodeld */; };
+		BB37A99A25D5A89100E5E4DC /* StockPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB37A99925D5A89100E5E4DC /* StockPrice.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		BB37A98C25D514A700E5E4DC /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		BB37A98F25D514A700E5E4DC /* StockTest.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StockTest.xcdatamodel; sourceTree = "<group>"; };
 		BB37A99125D514A700E5E4DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB37A99925D5A89100E5E4DC /* StockPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockPrice.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				BB37A99125D514A700E5E4DC /* Info.plist */,
 				BB37A98E25D514A700E5E4DC /* StockTest.xcdatamodeld */,
 				BB37A98925D514A700E5E4DC /* Preview Content */,
+				BB37A99C25D5AA8300E5E4DC /* Model */,
 			);
 			path = StockTest;
 			sourceTree = "<group>";
@@ -73,6 +76,14 @@
 				BB37A98A25D514A700E5E4DC /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		BB37A99C25D5AA8300E5E4DC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BB37A99925D5A89100E5E4DC /* StockPrice.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,6 +157,7 @@
 			files = (
 				BB37A98D25D514A700E5E4DC /* Persistence.swift in Sources */,
 				BB37A98625D514A300E5E4DC /* ContentView.swift in Sources */,
+				BB37A99A25D5A89100E5E4DC /* StockPrice.swift in Sources */,
 				BB37A99025D514A700E5E4DC /* StockTest.xcdatamodeld in Sources */,
 				BB37A98425D514A300E5E4DC /* StockTestApp.swift in Sources */,
 			);
