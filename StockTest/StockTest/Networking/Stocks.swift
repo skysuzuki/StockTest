@@ -8,9 +8,15 @@
 import SwiftUI
 import Combine
 
-class Stocks: ObservableObject {
+enum stockFunction: String {
+    case intraday = "TIME_SERIES_INTRADAY"
+    case daily = "TIME_SERIES_DAILY"
+    case Weekly = "TIME_SERIES_WEEKLY"
+}
 
-    @Published var stockViews = [StockView]()
+class Stocks: ObservableObject, Identifiable {
+
+    @Published var stockView: StockView?
     @Published var prices = [Double]()
     @Published var currentPrice = "...."
     var urlBase = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=00HW87JZWQ30BPUN"
@@ -18,11 +24,13 @@ class Stocks: ObservableObject {
     //https://www.alphavantage.co/query?function=TIME_SERIES_DILY&symbol=TESLA&"
     var cancellable: Set<AnyCancellable> = Set()
     var stockViewDispatchGroup = DispatchGroup()
-
+    var id: String
     private var apikey = "00HW87JZWQ30BPUN"
 
-    init() {
+    init(_ id: String) {
         //fetchStockPrice()
+        self.id = id
+        fetchStockView(id) {}
     }
 
     func fetchStockViews() {
@@ -68,9 +76,9 @@ class Stocks: ObservableObject {
 
             let jsonDecoder = JSONDecoder()
             do {
-                let stockView = try jsonDecoder.decode([String: StockView].self, from: data).values
+                let stockViews = try jsonDecoder.decode([String: StockView].self, from: data)
                 DispatchQueue.main.async {
-                    self.stockViews.append(contentsOf: stockView)
+                    self.stockView = stockViews["Global Quote"]
                 }
             } catch {
                 print("Error decoding Stock Global View")
@@ -79,16 +87,27 @@ class Stocks: ObservableObject {
         }.resume()
     }
 
-    func fetchStockPrice() {
+    func fetchStockPrice(_ symbol: String, _ function: stockFunction) {
 
         //let url = URL(string: urlBase + apiKey)!
-        URLSession.shared.dataTaskPublisher(for: URL(string: urlBase)!)
+
+        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+        urlComponents?.queryItems = [
+            URLQueryItem(name: "function", value: function.rawValue),
+            URLQueryItem(name: "symbol", value: symbol),
+            URLQueryItem(name: "interval", value: "5min"),
+            URLQueryItem(name: "apikey", value: apikey)
+        ]
+
+        guard let requestURL = urlComponents?.url else { return }
+
+        URLSession.shared.dataTaskPublisher(for: requestURL)
             .map { output in
                 return output.data
             }
             .decode(type: StocksDaily.self, decoder: JSONDecoder())
             .sink(receiveCompletion: { _ in
-                print("completed")
+                print("completed \(self.id)")
             }, receiveValue: { value in
 
                 var stockPrices = [Double]()

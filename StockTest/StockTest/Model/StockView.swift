@@ -8,6 +8,7 @@
 import Foundation
 
 struct StockView: Codable {
+
     let symbol: String
     let price: String
     let change: String

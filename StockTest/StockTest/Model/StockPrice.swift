@@ -26,7 +26,7 @@ struct StocksDaily: Codable {
     let timeSeriesDaily: [String: StockPrice]?
 
     private enum CodingKeys: String, CodingKey {
-        case timeSeriesDaily = "Time Series (Daily)"
+        case timeSeriesDaily = "Time Series (5min)"
     }
 
     init(from decoder: Decoder) throws {

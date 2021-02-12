@@ -18,29 +18,26 @@ struct ContentView: View {
         animation: .default)
     private var items: FetchedResults<Item>
 
-    @ObservedObject var stocks = Stocks()
+    @ObservedObject var crsrStock = Stocks("CRSR")
+    @ObservedObject var applStock = Stocks("TSLA")
 
     init() {
-        stocks.fetchStockViews()
-        //stocks.fetchStockPrice()
+        //stocks.fetchStockViews()
+        //stocks.fetchStockPrice("CRSR", .intraday)
     }
 
     var body: some View {
-
-        let stockViews = stocks.stockViews
-
-        VStack {
-            
-        }
-
-        NavigationView{
-//
-            //        LineView(data: stocks.prices, title: "IBM", legend: "Full Screen")
-            //            .padding()
-            //            LineView(data: stocks.prices, title: "IBM", price: "\(stocks.currentPrice) INR")
-            //                    .padding()
-            //LineView(data: [8,23,54,32], title: "TESLA")
-            StockList(stocks: stockViews)
+        StockHome(stocks: [crsrStock, applStock])
+        //let stockViews = stocks.stockViews
+            //StockList(stocks: stockViews)
+//            ForEach(stockViews) { stock in
+//                NavigationLink(
+//                    destination: LineView(prices: stock),
+//                    label: {
+//                        /*@START_MENU_TOKEN@*/Text("Navigate")/*@END_MENU_TOKEN@*/
+//                    })
+//            }
+            //LineView(prices: stocks.prices)
 
             //        List {
             //            ForEach(items) { item in
@@ -57,9 +54,6 @@ struct ContentView: View {
             //                Label("Add Item", systemImage: "plus")
             //            }
             //        }
-            .navigationBarTitle("Stocks")
-        }
-        .edgesIgnoringSafeArea(Edge.Set(.bottom))
     }
 
     private func addItem() {
