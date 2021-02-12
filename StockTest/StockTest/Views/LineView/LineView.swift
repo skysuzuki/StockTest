@@ -39,9 +39,15 @@ struct LineView: View {
                 Text(String(format: "%.2f", stock.currentPrice))
                     .font(.subheadline)
                     .offset(x: 5, y: 0)
-                Text(stock.stockView?.change ?? "change")
-                    .font(.footnote)
-                    .foregroundColor(.green)
+                HStack {
+                    let changeColor = isPositiveChange() ? Color.green : Color.red
+                    Image(systemName: isPositiveChange() ? "arrowtriangle.up.fill" : "arrowtriangle.down.fill")
+                        .foregroundColor(changeColor)
+                    let changeString = String(format: "%.2f", Float(stock.stockView?.change ?? "0.00")!)
+                    Text(changeString)
+                        .font(.footnote)
+                        .foregroundColor(changeColor)
+                }
             }
             .offset(x: 20, y: 20)
             VStack(alignment: .center, spacing: 8) {
@@ -73,6 +79,16 @@ struct LineView: View {
             self.stock.fetchStockPrice(stock.id)
         }
         .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private func isPositiveChange() -> Bool {
+        if let stockView = stock.stockView,
+           let change = Double(stockView.change) {
+            if change > 0 { return true }
+            else { return false }
+        } else {
+            return false
+        }
     }
 
     private func priceForInterval(_ interval: String) {

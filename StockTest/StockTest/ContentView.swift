@@ -18,6 +18,13 @@ struct ContentView: View {
         animation: .default)
     private var items: FetchedResults<Item>
 
+    @State private var selection: Tab = .home
+
+    enum Tab {
+        case home
+        case search
+    }
+
     @ObservedObject var crsrStock = Stocks("CRSR")
     @ObservedObject var applStock = Stocks("AAPL")
     @ObservedObject var bcrxStock = Stocks("BCRX")
@@ -31,8 +38,31 @@ struct ContentView: View {
     }
 
     var body: some View {
+        TabView(selection: $selection) {
+            StockHome(stocks: [crsrStock, applStock, bcrxStock, tslaStock, elyStock, gmeStock])
+                .tabItem {
+                    Label("Home", systemImage: "house")
+                }
+                .tag(Tab.home)
+            SearchHome()
+                .tabItem {
+                    Label("Search", systemImage: "magnifyingglass")
+                }
+                .tag(Tab.search)
+//            CategoryHome()
+//                .tabItem {
+//                    Label("Featured", systemImage: "star")
+//                }
+//                .tag(Tab.featured)
+//
+//            LandmarkList()
+//                .tabItem {
+//                    Label("List", systemImage: "list.bullet")
+//                }
+//                .tag(Tab.list)
+        }
 
-        StockHome(stocks: [crsrStock, applStock, bcrxStock, tslaStock, elyStock, gmeStock])
+
             //        List {
             //            ForEach(items) { item in
             //                Text("Item at \(item.timestamp!, formatter: itemFormatter)")
