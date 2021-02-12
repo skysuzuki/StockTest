@@ -35,16 +35,16 @@ struct LineView: View {
                     }
                 }
                 .offset(x: 0, y: 0)
-                ZStack {
-                    GeometryReader { reader in
-                        Line(data: self.data,
-                             frame: .constant(CGRect(x: 0, y: 0, width: reader.frame(in: .local).width, height: reader.frame(in: .local).height))
-                        )
-                        .offset(x: 0, y: 0)
-                    }
-                    .frame(width: geometry.frame(in: .local).size.width, height: 200)
-                    .offset(x: 0, y: -100)
-                }
+//                ZStack {
+//                    GeometryReader { reader in
+//                        Line(data: self.data,
+//                             frame: .constant(CGRect(x: 0, y: 0, width: reader.frame(in: .local).width, height: reader.frame(in: .local).height))
+//                        )
+//                        .offset(x: 0, y: 0)
+//                    }
+//                    .frame(width: geometry.frame(in: .local).size.width, height: 200)
+//                    .offset(x: 0, y: -100)
+//                }
                 .frame(width: geometry.frame(in: .local).size.width, height: 200)
             }
 

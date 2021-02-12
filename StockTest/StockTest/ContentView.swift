@@ -8,7 +8,6 @@
 import SwiftUI
 import CoreData
 import Combine
-import SwiftUICharts
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -22,6 +21,7 @@ struct ContentView: View {
 
     init() {
         stocks.fetchStockViews()
+        //stocks.fetchStockPrice()
     }
 
     var body: some View {
@@ -29,31 +29,32 @@ struct ContentView: View {
         let stockViews = stocks.stockViews
 
         NavigationView{
+//
             //        LineView(data: stocks.prices, title: "IBM", legend: "Full Screen")
             //            .padding()
-            //        LineView(data: stocks.prices, title: "IBM", price: "\(stocks.currentPrice) INR")
-            //            .padding()
-
+            //            LineView(data: stocks.prices, title: "IBM", price: "\(stocks.currentPrice) INR")
+            //                    .padding()
+            //LineView(data: [8,23,54,32], title: "TESLA")
             StockList(stocks: stockViews)
 
-                //        List {
-                //            ForEach(items) { item in
-                //                Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                //            }
-                //            .onDelete(perform: deleteItems)
-                //        }
-                //        .toolbar {
-                //            #if os(iOS)
-                //            EditButton()
-                //            #endif
-                //
-                //            Button(action: addItem) {
-                //                Label("Add Item", systemImage: "plus")
-                //            }
-                //        }
-                .navigationBarTitle("Stocks")
-
-        }.edgesIgnoringSafeArea(Edge.Set(.bottom))
+            //        List {
+            //            ForEach(items) { item in
+            //                Text("Item at \(item.timestamp!, formatter: itemFormatter)")
+            //            }
+            //            .onDelete(perform: deleteItems)
+            //        }
+            //        .toolbar {
+            //            #if os(iOS)
+            //            EditButton()
+            //            #endif
+            //
+            //            Button(action: addItem) {
+            //                Label("Add Item", systemImage: "plus")
+            //            }
+            //        }
+            .navigationBarTitle("Stocks")
+        }
+        .edgesIgnoringSafeArea(Edge.Set(.bottom))
     }
 
     private func addItem() {

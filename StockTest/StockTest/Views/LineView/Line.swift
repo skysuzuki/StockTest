@@ -60,8 +60,8 @@ struct Line: View {
     }
 }
 
-//struct Line_Previews: PreviewProvider {
-//    static var previews: some View {
-//        Line(data: [], frame: <#Binding<CGRect>#>)
-//    }
-//}
+struct Line_Previews: PreviewProvider {
+    static var previews: some View {
+        Line(data: [8,23,54,32], frame: .constant(CGRect(x: 0, y: 0, width: 100, height: 100)))
+    }
+}

@@ -51,8 +51,8 @@ class Stocks: ObservableObject {
         }
     }
 
-
-    func fetchStockView(_ symbol: String, completion: @escaping() -> Void) {
+    
+    private func fetchStockView(_ symbol: String, completion: @escaping() -> Void) {
 
         var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
         urlComponents?.queryItems = [
