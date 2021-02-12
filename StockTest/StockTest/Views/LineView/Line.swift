@@ -12,7 +12,8 @@ import Charts
 struct Line: UIViewRepresentable {
 
     //Bar chart accepts data as array of BarChartDataEntry objects
-    var entries : [ChartDataEntry]
+    //var entries : [ChartDataEntry]
+    var prices : [Double]
     // this func is required to conform to UIViewRepresentable protocol
     func makeUIView(context: Context) -> LineChartView {
         //crate new chart
@@ -40,6 +41,10 @@ struct Line: UIViewRepresentable {
     func addData() -> LineChartData{
         let data = LineChartData()
         //BarChartDataSet is an object that contains information about your data, styling and more
+        var entries = [ChartDataEntry]()
+        for i in 0..<prices.count {
+            entries.append(ChartDataEntry(x: Double(i), y: prices[i]))
+        }
         let dataSet = LineChartDataSet(entries: entries)
         // change bars color to green
         dataSet.colors = [NSUIColor.green]
@@ -58,12 +63,6 @@ struct Line: UIViewRepresentable {
 
 struct Line_Previews: PreviewProvider {
     static var previews: some View {
-        Line(entries: [
-            ChartDataEntry(x: 1, y: 1),
-            ChartDataEntry(x: 2, y: 3),
-            ChartDataEntry(x: 3, y: -2),
-            ChartDataEntry(x: 4, y: 5),
-            ChartDataEntry(x: 5, y: 10),
-        ])
+        Line(prices: [0.1, 22.1, 10.2] )
     }
 }

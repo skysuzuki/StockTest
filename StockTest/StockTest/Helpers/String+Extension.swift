@@ -14,7 +14,17 @@ extension String {
         return formatter
     }()
 
-    var stringDate: Date? {
+    static let longDate: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return formatter
+    }()
+
+    var stringDateDaily: Date? {
         return String.shortDate.date(from: self)
+    }
+
+    var stringDateMinute: Date? {
+        return String.longDate.date(from: self)
     }
 }

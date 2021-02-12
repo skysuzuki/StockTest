@@ -27,18 +27,8 @@ struct ContentView: View {
     }
 
     var body: some View {
-        StockHome(stocks: [crsrStock, applStock])
-        //let stockViews = stocks.stockViews
-            //StockList(stocks: stockViews)
-//            ForEach(stockViews) { stock in
-//                NavigationLink(
-//                    destination: LineView(prices: stock),
-//                    label: {
-//                        /*@START_MENU_TOKEN@*/Text("Navigate")/*@END_MENU_TOKEN@*/
-//                    })
-//            }
-            //LineView(prices: stocks.prices)
 
+        StockHome(stocks: [crsrStock])
             //        List {
             //            ForEach(items) { item in
             //                Text("Item at \(item.timestamp!, formatter: itemFormatter)")

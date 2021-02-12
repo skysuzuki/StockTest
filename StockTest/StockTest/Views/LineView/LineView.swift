@@ -10,11 +10,25 @@ import Charts
 
 struct LineView: View {
 
-    let stock: Stocks
+    @State private var interval = "1D"
+    var intervals = [
+        "1D",
+        "1W",
+        "1M",
+        "3M",
+        "1Y",
+        "5Y"]
+    @ObservedObject var stock: Stocks
+    var chartDataTest = [ChartDataEntry]()
     //var prices: [Double]
     init(stock: Stocks) {
         self.stock = stock
-        self.stock.fetchStockPrice(stock.id, .intraday)
+        //stock.fetchStockPriceDaily(stock.id, .daily) {}
+        //self.stock.fetchStockPrice(stock.id, .intraday)
+        //createChartData()
+        UISegmentedControl.appearance().selectedSegmentTintColor = .green
+        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.black], for: .selected)
+        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
     }
 
     var body: some View {
@@ -26,19 +40,38 @@ struct LineView: View {
                     .font(.body)
                     .offset(x: 5, y: 0)
             }
-            .padding()
-            let entries = createChartData(prices: stock.prices)
-            Line(entries: entries)
+            .offset(x: 10, y: 20)
+            Line(prices: stock.prices)
                 .padding()
+            Picker(selection: $interval, label: Text("")) {
+                ForEach(intervals, id: \.self) {
+                    Text($0)
+                }
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding()
+        }
+        .onAppear() {
+            self.stock.fetchStockPrice(stock.id, .intraday)
         }
     }
 
-    private func createChartData(prices: [Double]) -> [ChartDataEntry] {
-        var chartData = [ChartDataEntry]()
-        for i in 0..<prices.count {
-            chartData.append(ChartDataEntry(x: Double(i), y: prices[i]))
+    private mutating func createChartData() {
+        if interval == "1M" {
+            print("1M SELECTED")
+//            stock.fetchStockPriceDaily(stock.id, .daily) {
+//                for i in 0..<stock.prices.count {
+//                    chartDataTest.append(ChartDataEntry(x: Double(i), y: stock.prices[i]))
+//                }
+//            }
+            //self.stock.fetchStockPrice(stock.id, .intraday)
+            //stock.fetchStockPriceDaily(stock.id, .daily)
         }
-        return chartData
+    }
+
+    private func priceForInterval() {
+
+
     }
 }
 
