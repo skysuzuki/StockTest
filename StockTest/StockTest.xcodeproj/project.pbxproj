@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,12 +17,11 @@
 		BB37A99A25D5A89100E5E4DC /* StockPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB37A99925D5A89100E5E4DC /* StockPrice.swift */; };
 		BB37A99E25D5AB5A00E5E4DC /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB37A99D25D5AB5A00E5E4DC /* String+Extension.swift */; };
 		BB37A9A225D5AC4700E5E4DC /* Stocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB37A9A125D5AC4700E5E4DC /* Stocks.swift */; };
-		BB37A9AB25D5B19E00E5E4DC /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB37A9AA25D5B19E00E5E4DC /* LineView.swift */; };
-		BB37A9AE25D5B48C00E5E4DC /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB37A9AD25D5B48C00E5E4DC /* Line.swift */; };
 		BB37A9B125D5B67600E5E4DC /* Path+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB37A9B025D5B67600E5E4DC /* Path+Extension.swift */; };
 		BB37A9BC25D5D0F400E5E4DC /* StockRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB37A9BB25D5D0F400E5E4DC /* StockRow.swift */; };
 		BB37A9C025D5D43200E5E4DC /* StockList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB37A9BF25D5D43200E5E4DC /* StockList.swift */; };
 		BB37A9C325D5D60F00E5E4DC /* StockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB37A9C225D5D60F00E5E4DC /* StockView.swift */; };
+		BB5E584C25D6233B0031FEAD /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E584B25D6233B0031FEAD /* LineView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,12 +39,11 @@
 		BB37A99925D5A89100E5E4DC /* StockPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockPrice.swift; sourceTree = "<group>"; };
 		BB37A99D25D5AB5A00E5E4DC /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String+Extension.swift"; path = "StockTest/Helpers/String+Extension.swift"; sourceTree = SOURCE_ROOT; };
 		BB37A9A125D5AC4700E5E4DC /* Stocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Stocks.swift; path = StockTest/Networking/Stocks.swift; sourceTree = SOURCE_ROOT; };
-		BB37A9AA25D5B19E00E5E4DC /* LineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
-		BB37A9AD25D5B48C00E5E4DC /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		BB37A9B025D5B67600E5E4DC /* Path+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Path+Extension.swift"; sourceTree = "<group>"; };
 		BB37A9BB25D5D0F400E5E4DC /* StockRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockRow.swift; sourceTree = "<group>"; };
 		BB37A9BF25D5D43200E5E4DC /* StockList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockList.swift; sourceTree = "<group>"; };
 		BB37A9C225D5D60F00E5E4DC /* StockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockView.swift; sourceTree = "<group>"; };
+		BB5E584B25D6233B0031FEAD /* LineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,7 +64,6 @@
 				76A35AC5ADE0E81B36EF0606 /* Pods-StockTest.debug.xcconfig */,
 				4716E295BE471AAF357209A8 /* Pods-StockTest.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -152,8 +149,7 @@
 		BB37A9B925D5D0BF00E5E4DC /* LineView */ = {
 			isa = PBXGroup;
 			children = (
-				BB37A9AA25D5B19E00E5E4DC /* LineView.swift */,
-				BB37A9AD25D5B48C00E5E4DC /* Line.swift */,
+				BB5E584B25D6233B0031FEAD /* LineView.swift */,
 			);
 			path = LineView;
 			sourceTree = "<group>";
@@ -291,13 +287,12 @@
 				BB37A9B125D5B67600E5E4DC /* Path+Extension.swift in Sources */,
 				BB37A99E25D5AB5A00E5E4DC /* String+Extension.swift in Sources */,
 				BB37A98D25D514A700E5E4DC /* Persistence.swift in Sources */,
+				BB5E584C25D6233B0031FEAD /* LineView.swift in Sources */,
 				BB37A9A225D5AC4700E5E4DC /* Stocks.swift in Sources */,
 				BB37A98625D514A300E5E4DC /* ContentView.swift in Sources */,
-				BB37A9AB25D5B19E00E5E4DC /* LineView.swift in Sources */,
 				BB37A9C025D5D43200E5E4DC /* StockList.swift in Sources */,
 				BB37A9BC25D5D0F400E5E4DC /* StockRow.swift in Sources */,
 				BB37A99A25D5A89100E5E4DC /* StockPrice.swift in Sources */,
-				BB37A9AE25D5B48C00E5E4DC /* Line.swift in Sources */,
 				BB37A99025D514A700E5E4DC /* StockTest.xcdatamodeld in Sources */,
 				BB37A98425D514A300E5E4DC /* StockTestApp.swift in Sources */,
 				BB37A9C325D5D60F00E5E4DC /* StockView.swift in Sources */,

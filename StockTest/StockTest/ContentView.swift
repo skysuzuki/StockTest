@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreData
 import Combine
+import Charts
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -27,6 +28,10 @@ struct ContentView: View {
     var body: some View {
 
         let stockViews = stocks.stockViews
+
+        VStack {
+            
+        }
 
         NavigationView{
 //

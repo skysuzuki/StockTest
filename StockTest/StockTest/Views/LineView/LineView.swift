@@ -6,54 +6,63 @@
 //
 
 import SwiftUI
+import Charts
 
-struct LineView: View {
-    var data: [(Double)]
-    var title: String?
-    var price: String?
+struct LineView: UIViewRepresentable {
 
-    public init(data: [Double],
-                title: String? = nil,
-                price: String? = nil) {
-        self.data = data
-        self.title = title
-        self.price = title
+    //Bar chart accepts data as array of BarChartDataEntry objects
+    var entries : [ChartDataEntry]
+    // this func is required to conform to UIViewRepresentable protocol
+    func makeUIView(context: Context) -> LineChartView {
+        //crate new chart
+        let chart = LineChartView()
+        //it is convenient to form chart data in a separate func
+        chart.xAxis.drawLabelsEnabled = false
+        chart.xAxis.drawGridLinesEnabled = false
+        chart.xAxis.drawAxisLineEnabled = false
+        chart.leftAxis.drawLabelsEnabled = false
+        chart.leftAxis.drawGridLinesEnabled = false
+        chart.leftAxis.drawAxisLineEnabled = false
+        chart.rightAxis.drawLabelsEnabled = false
+        chart.rightAxis.drawGridLinesEnabled = false
+        chart.rightAxis.drawAxisLineEnabled = false
+        chart.data = addData()
+        return chart
     }
 
-    var body: some View {
-        GeometryReader { geometry in
-            VStack(alignment: .leading, spacing: 8) {
-                Group {
-                    if (self.title != nil) {
-                        Text(self.title!)
-                            .font(.title)
-                    }
-                    if (self.price != nil) {
-                        Text(self.price!)
-                            .font(.body)
-                            .offset(x: 5, y: 0)
-                    }
-                }
-                .offset(x: 0, y: 0)
-//                ZStack {
-//                    GeometryReader { reader in
-//                        Line(data: self.data,
-//                             frame: .constant(CGRect(x: 0, y: 0, width: reader.frame(in: .local).width, height: reader.frame(in: .local).height))
-//                        )
-//                        .offset(x: 0, y: 0)
-//                    }
-//                    .frame(width: geometry.frame(in: .local).size.width, height: 200)
-//                    .offset(x: 0, y: -100)
-//                }
-                .frame(width: geometry.frame(in: .local).size.width, height: 200)
-            }
-
-        }
+    // this func is required to conform to UIViewRepresentable protocol
+    func updateUIView(_ uiView: LineChartView, context: Context) {
+        //when data changes chartd.data update is required
+        uiView.data = addData()
     }
+
+    func addData() -> LineChartData{
+        let data = LineChartData()
+        //BarChartDataSet is an object that contains information about your data, styling and more
+        let dataSet = LineChartDataSet(entries: entries)
+        // change bars color to green
+        dataSet.colors = [NSUIColor.green]
+        //change data label
+        dataSet.label = ""
+
+        dataSet.drawCirclesEnabled = false
+        dataSet.drawValuesEnabled = false
+        data.addDataSet(dataSet)
+        return data
+    }
+
+    typealias UIViewType = LineChartView
+
 }
 
 struct LineView_Previews: PreviewProvider {
     static var previews: some View {
-        LineView(data: [8,23,54,32], title: "TESLA")
+        LineView(entries: [
+            ChartDataEntry(x: 1, y: 1),
+            ChartDataEntry(x: 2, y: 3),
+            ChartDataEntry(x: 3, y: -2),
+            ChartDataEntry(x: 4, y: 5),
+            ChartDataEntry(x: 5, y: 10),
+        ])
     }
 }
