@@ -19,7 +19,11 @@ struct ContentView: View {
     private var items: FetchedResults<Item>
 
     @ObservedObject var crsrStock = Stocks("CRSR")
-    @ObservedObject var applStock = Stocks("TSLA")
+    @ObservedObject var applStock = Stocks("AAPL")
+    @ObservedObject var bcrxStock = Stocks("BCRX")
+    @ObservedObject var tslaStock = Stocks("TSLA")
+    @ObservedObject var elyStock = Stocks("ELY")
+    @ObservedObject var gmeStock = Stocks("GME")
 
     init() {
         //stocks.fetchStockViews()
@@ -28,7 +32,7 @@ struct ContentView: View {
 
     var body: some View {
 
-        StockHome(stocks: [crsrStock])
+        StockHome(stocks: [crsrStock, applStock, bcrxStock, tslaStock, elyStock, gmeStock])
             //        List {
             //            ForEach(items) { item in
             //                Text("Item at \(item.timestamp!, formatter: itemFormatter)")

@@ -175,6 +175,24 @@ class Stocks: ObservableObject, Identifiable {
     }
 
     // MARK: HELPERS
+    func getStockFullName(_ symbol: String) -> String {
+        switch symbol {
+        case "TSLA":
+            return "Tesla"
+        case "BCRX":
+            return "Biocryst Pharm"
+        case "CRSR":
+            return "Corsair Gaming Inc"
+        case "AAPL":
+            return "Apple Inc"
+        case "ELY":
+            return "Callaway Golf Co."
+        case "GME":
+            return "Gamestop"
+        default:
+            return "No Name"
+        }
+    }
     // Returns the amount of prices to be shown on a graph based on interval
     private func stockCountForInterval(_ interval: String) -> Int {
         switch interval {

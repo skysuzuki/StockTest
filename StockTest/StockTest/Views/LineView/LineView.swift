@@ -21,56 +21,58 @@ struct LineView: View {
     @ObservedObject var stock: Stocks
     var chartDataTest = [ChartDataEntry]()
 
-    //@State var dataToShow = \Stocks.prices
-
-
-    //var prices: [Double]
     init(stock: Stocks) {
         self.stock = stock
-        //stock.fetchStockPriceDaily(stock.id, .daily) {}
-        //self.stock.fetchStockPrice(stock.id, .intraday)
-        //createChartData()
         UISegmentedControl.appearance().selectedSegmentTintColor = .green
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.black], for: .selected)
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
     }
 
     var body: some View {
-        VStack(alignment: .center, spacing: 8) {
+        VStack(alignment: .leading, spacing: 8) {
             Group {
                 Text(stock.id)
+                    .font(.caption)
+                Text(stock.getStockFullName(stock.id))
                     .font(.title)
-                Text("\(stock.currentPrice)")
-                    .font(.body)
+                    .bold()
+                Text(String(format: "%.2f", stock.currentPrice))
+                    .font(.subheadline)
                     .offset(x: 5, y: 0)
+                Text(stock.stockView?.change ?? "change")
+                    .font(.footnote)
+                    .foregroundColor(.green)
             }
-            .offset(x: 10, y: 20)
-            Line(prices: stock.prices)
-                .padding()
-            HStack(alignment: .center) {
-                ForEach(intervals, id: \.self) { interval in
-                    Button(action: {
-                        priceForInterval(interval)
-                    }, label: {
-                        Text(interval)
-                            .font(.system(size: 15))
-                            .foregroundColor(interval == currInterval ? Color.white
-                                : Color.green)
-                            .animation(nil)
-                    })
-                    .frame(width: 35)
-                    .padding(5)
-                    .background(interval == currInterval
-                                    ? Color.green
-                                    : Color.white)
-                    .cornerRadius(10)
-                    .padding(.bottom, 20)
+            .offset(x: 20, y: 20)
+            VStack(alignment: .center, spacing: 8) {
+                Line(prices: stock.prices)
+                    .padding()
+                HStack(alignment: .center) {
+                    ForEach(intervals, id: \.self) { interval in
+                        Button(action: {
+                            priceForInterval(interval)
+                        }, label: {
+                            Text(interval)
+                                .font(.system(size: 15))
+                                .foregroundColor(interval == currInterval ? Color.white
+                                    : Color.green)
+                                .animation(nil)
+                        })
+                        .frame(width: 35)
+                        .padding(5)
+                        .background(interval == currInterval
+                                        ? Color.green
+                                        : Color.white)
+                        .cornerRadius(10)
+                        .padding(.bottom, 20)
+                    }
                 }
             }
         }
         .onAppear() {
             self.stock.fetchStockPrice(stock.id)
         }
+        .navigationBarTitleDisplayMode(.inline)
     }
 
     private func priceForInterval(_ interval: String) {

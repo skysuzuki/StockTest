@@ -16,11 +16,13 @@ struct StockHome: View {
             List {
                 ForEach(stocks) { stock in
                     if let stockView = stock.stockView {
-                        NavigationLink(
-                            destination: LineView(stock: stock),
-                            label: {
-                                StockRow(stock: stockView)
-                        })
+                        ZStack {
+                            StockRow(stock: stockView, name: stock.getStockFullName(stock.id))
+                            NavigationLink(
+                                destination: LineView(stock: stock)) {
+                                EmptyView()
+                            }.buttonStyle(PlainButtonStyle())
+                        }
                     }
                 }
             }
