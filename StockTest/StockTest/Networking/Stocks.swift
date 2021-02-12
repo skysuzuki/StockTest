@@ -11,7 +11,7 @@ import Combine
 enum stockFunction: String {
     case intraday = "TIME_SERIES_INTRADAY"
     case daily = "TIME_SERIES_DAILY"
-    case Weekly = "TIME_SERIES_WEEKLY"
+    case weekly = "TIME_SERIES_WEEKLY"
 }
 
 class Stocks: ObservableObject, Identifiable {
@@ -34,29 +34,6 @@ class Stocks: ObservableObject, Identifiable {
     }
 
     func fetchStockViews() {
-        stockViewDispatchGroup.enter()
-        fetchStockView("TSLA") { self.stockViewDispatchGroup.leave() }
-
-        stockViewDispatchGroup.enter()
-        fetchStockView("BCRX") { self.stockViewDispatchGroup.leave() }
-
-        stockViewDispatchGroup.enter()
-        fetchStockView("CRSR") { self.stockViewDispatchGroup.leave() }
-
-        stockViewDispatchGroup.enter()
-        fetchStockView("AAPL") { self.stockViewDispatchGroup.leave() }
-
-        stockViewDispatchGroup.enter()
-        fetchStockView("ELY") { self.stockViewDispatchGroup.leave() }
-
-        stockViewDispatchGroup.enter()
-        fetchStockView("GME") { self.stockViewDispatchGroup.leave() }
-
-        stockViewDispatchGroup.notify(queue: .main) {
-            DispatchQueue.main.async {
-                print("Done fetching all stocks")
-            }
-        }
     }
 
     
@@ -88,13 +65,12 @@ class Stocks: ObservableObject, Identifiable {
         }.resume()
     }
 
-    func fetchStockPrice(_ symbol: String, _ function: stockFunction) {
-
-        //let url = URL(string: urlBase + apiKey)!
+    // Functionc call to fetch stock data for 1 Day and 1 week
+    func fetchStockPrice(_ symbol: String) {
 
         var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
         urlComponents?.queryItems = [
-            URLQueryItem(name: "function", value: function.rawValue),
+            URLQueryItem(name: "function", value: stockFunction.intraday.rawValue),
             URLQueryItem(name: "symbol", value: symbol),
             URLQueryItem(name: "interval", value: "5min"),
             URLQueryItem(name: "apikey", value: apikey)
@@ -136,90 +112,107 @@ class Stocks: ObservableObject, Identifiable {
             .store(in: &cancellable)
     }
 
-    func fetchStockPriceDaily(_ symbol: String, _ function: stockFunction, completion: @escaping() -> Void) {
 
-        //let url = URL(string: urlBase + apiKey)!
+    // Function call to fetch data for 1 month and 3 months
+    func fetchStockPriceMonthly(_ symbol: String,_ interval: String) {
 
         var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
         urlComponents?.queryItems = [
-            URLQueryItem(name: "function", value: function.rawValue),
+            URLQueryItem(name: "function", value: stockFunction.daily.rawValue),
             URLQueryItem(name: "symbol", value: symbol),
             URLQueryItem(name: "apikey", value: apikey)
         ]
 
         guard let requestURL = urlComponents?.url else { return }
 
-        URLSession.shared.dataTask(with: requestURL) { data,_,_ in
-            guard let data = data else { completion(); return }
+        URLSession.shared.dataTaskPublisher(for: requestURL)
+            .map { output in
+                return output.data
+            }
+            .decode(type: StocksDaily.self, decoder: JSONDecoder())
+            .sink(receiveCompletion: { _ in
+                print("completed \(self.id)")
+            }, receiveValue: { value in
 
-            let jsonDecoder = JSONDecoder()
-            do {
-                let stockDaily = try jsonDecoder.decode(StocksDaily.self, from: data)
-
-                var stockPrices = [Double]()
-
-                let orderedDates = stockDaily.timeSeriesDaily?.sorted {
-                    guard let d1 = $0.key.stringDateDaily, let d2 = $1.key.stringDateDaily else { return false }
-                    return d1 < d2
-                }
-
-                guard let stockData = orderedDates else { return }
-
-                for(_, stock) in stockData {
-                    if stockPrices.count < 30 {
-                        if let stock = Double(stock.close) {
-                            if stock > 0.0 {
-                                stockPrices.append(stock)
-                            }
-                        }
-                    }
-                }
-
-                print(stockPrices)
+                guard let stockPrices = self.sortStockByDate(value.timeSeries, interval) else { return }
 
                 DispatchQueue.main.async {
                     self.prices = stockPrices
-                    self.currentPrice = stockData.last?.value.close ?? ""
+                    //self.currentPrice = stockData.last?.value.close ?? ""
                 }
-            } catch {
-                print("Error decoding Stock Global View")
-            }
-            completion()
-        }.resume()
+            })
+            .store(in: &cancellable)
+    }
 
-//        URLSession.shared.dataTaskPublisher(for: requestURL)
-//            .map { output in
-//                return output.data
-//            }
-//            .decode(type: StocksDaily.self, decoder: JSONDecoder())
-//            .sink(receiveCompletion: { _ in
-//                print("completed \(self.id)")
-//            }, receiveValue: { value in
-//
-//                var stockPrices = [Double]()
-//
-//                let orderedDates = value.timeSeriesDaily?.sorted {
-//                    guard let d1 = $0.key.stringDateDaily, let d2 = $1.key.stringDateDaily else { return false }
-//                    return d1 < d2
-//                }
-//
-//                guard let stockData = orderedDates else { return }
-//
-//                for(_, stock) in stockData {
-//                    if stockPrices.count < 30 {
-//                        if let stock = Double(stock.close) {
-//                            if stock > 0.0 {
-//                                stockPrices.append(stock)
-//                            }
-//                        }
-//                    }
-//                }
-//
-//                DispatchQueue.main.async {
-//                    self.prices = stockPrices
-//                    self.currentPrice = stockData.last?.value.close ?? ""
-//                }
-//            })
-//            .store(in: &cancellable)
+    func fetchStockPriceYearly(_ symbol: String,_ interval: String) {
+
+        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+        urlComponents?.queryItems = [
+            URLQueryItem(name: "function", value: stockFunction.weekly.rawValue),
+            URLQueryItem(name: "symbol", value: symbol),
+            URLQueryItem(name: "apikey", value: apikey)
+        ]
+
+        guard let requestURL = urlComponents?.url else { return }
+
+        URLSession.shared.dataTaskPublisher(for: requestURL)
+            .map { output in
+                return output.data
+            }
+            .decode(type: StocksWeekly.self, decoder: JSONDecoder())
+            .sink(receiveCompletion: { _ in
+                print("completed \(self.id)")
+            }, receiveValue: { value in
+
+                guard let stockPrices = self.sortStockByDate(value.timeSeries, interval) else { return }
+
+                DispatchQueue.main.async {
+                    self.prices = stockPrices
+                    //self.currentPrice = stockData.last?.value.close ?? ""
+                }
+            })
+            .store(in: &cancellable)
+    }
+
+    // MARK: HELPERS
+    // Returns the amount of prices to be shown on a graph based on interval
+    private func stockCountForInterval(_ interval: String) -> Int {
+        switch interval {
+        case "1M":
+            return 30
+        case "3M":
+            return 90
+        case "1Y":
+            return 52
+        case "3Y":
+            return 52 * 3
+        default:
+            return 0
+        }
+    }
+
+    // Returns the stock prices sorted by data
+    private func sortStockByDate(_ timeSeries: [String : StockPrice]?, _ interval: String) -> [Double]? {
+        let orderedDates = timeSeries?.sorted {
+            guard let d1 = $0.key.stringDateDaily, let d2 = $1.key.stringDateDaily else { return false }
+            return d1 < d2
+        }
+
+        guard let stockData = orderedDates else { return nil }
+
+        let stockCount = self.stockCountForInterval(interval)
+
+        var stockPrices = [Double]()
+        for(_, stock) in stockData {
+            if stockPrices.count < stockCount {
+                if let stock = Double(stock.close) {
+                    if stock > 0.0 {
+                        stockPrices.append(stock)
+                    }
+                }
+            }
+        }
+        print(stockPrices.count)
+        return stockPrices
     }
 }

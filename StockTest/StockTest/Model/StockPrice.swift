@@ -37,15 +37,29 @@ struct StocksMinute: Codable {
 }
 
 struct StocksDaily: Codable {
-    let timeSeriesDaily: [String: StockPrice]?
+    let timeSeries: [String: StockPrice]?
 
     private enum CodingKeys: String, CodingKey {
-        case timeSeriesDaily = "Time Series (Daily)"
+        case timeSeries = "Time Series (Daily)"
     }
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
 
-        timeSeriesDaily = try (values.decodeIfPresent([String : StockPrice].self, forKey: .timeSeriesDaily))
+        timeSeries = try (values.decodeIfPresent([String : StockPrice].self, forKey: .timeSeries))
+    }
+}
+
+struct StocksWeekly: Codable {
+    let timeSeries: [String: StockPrice]?
+
+    private enum CodingKeys: String, CodingKey {
+        case timeSeries = "Weekly Time Series"
+    }
+
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+
+        timeSeries = try (values.decodeIfPresent([String : StockPrice].self, forKey: .timeSeries))
     }
 }

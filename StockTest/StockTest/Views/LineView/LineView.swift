@@ -10,7 +10,7 @@ import Charts
 
 struct LineView: View {
 
-    @State private var interval = "1D"
+    @State private var currInterval = "1D"
     var intervals = [
         "1D",
         "1W",
@@ -20,6 +20,10 @@ struct LineView: View {
         "5Y"]
     @ObservedObject var stock: Stocks
     var chartDataTest = [ChartDataEntry]()
+
+    //@State var dataToShow = \Stocks.prices
+
+
     //var prices: [Double]
     init(stock: Stocks) {
         self.stock = stock
@@ -32,7 +36,7 @@ struct LineView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .center, spacing: 8) {
             Group {
                 Text(stock.id)
                     .font(.title)
@@ -43,35 +47,44 @@ struct LineView: View {
             .offset(x: 10, y: 20)
             Line(prices: stock.prices)
                 .padding()
-            Picker(selection: $interval, label: Text("")) {
-                ForEach(intervals, id: \.self) {
-                    Text($0)
+            HStack(alignment: .center) {
+                ForEach(intervals, id: \.self) { interval in
+                    Button(action: {
+                        priceForInterval(interval)
+                    }, label: {
+                        Text(interval)
+                            .font(.system(size: 15))
+                            .foregroundColor(interval == currInterval ? Color.white
+                                : Color.green)
+                            .animation(nil)
+                    })
+                    .frame(width: 35)
+                    .padding(5)
+                    .background(interval == currInterval
+                                    ? Color.green
+                                    : Color.white)
+                    .cornerRadius(10)
+                    .padding(.bottom, 20)
                 }
             }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding()
         }
         .onAppear() {
-            self.stock.fetchStockPrice(stock.id, .intraday)
+            self.stock.fetchStockPrice(stock.id)
         }
     }
 
-    private mutating func createChartData() {
-        if interval == "1M" {
-            print("1M SELECTED")
-//            stock.fetchStockPriceDaily(stock.id, .daily) {
-//                for i in 0..<stock.prices.count {
-//                    chartDataTest.append(ChartDataEntry(x: Double(i), y: stock.prices[i]))
-//                }
-//            }
-            //self.stock.fetchStockPrice(stock.id, .intraday)
-            //stock.fetchStockPriceDaily(stock.id, .daily)
+    private func priceForInterval(_ interval: String) {
+        currInterval = interval
+        switch interval {
+        case "1D":
+            self.stock.fetchStockPrice(stock.id)
+        case "1M", "3M":
+            stock.fetchStockPriceMonthly(stock.id, interval)
+        case "1Y", "5Y":
+            stock.fetchStockPriceYearly(stock.id, interval)
+        default:
+            return
         }
-    }
-
-    private func priceForInterval() {
-
-
     }
 }
 
