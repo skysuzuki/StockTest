@@ -8,51 +8,23 @@
 import SwiftUI
 import Charts
 
-struct LineView: UIViewRepresentable {
+struct LineView: View {
 
-    //Bar chart accepts data as array of BarChartDataEntry objects
-    var entries : [ChartDataEntry]
-    // this func is required to conform to UIViewRepresentable protocol
-    func makeUIView(context: Context) -> LineChartView {
-        //crate new chart
-        let chart = LineChartView()
-        //it is convenient to form chart data in a separate func
-        chart.xAxis.drawLabelsEnabled = false
-        chart.xAxis.drawGridLinesEnabled = false
-        chart.xAxis.drawAxisLineEnabled = false
-        chart.leftAxis.drawLabelsEnabled = false
-        chart.leftAxis.drawGridLinesEnabled = false
-        chart.leftAxis.drawAxisLineEnabled = false
-        chart.rightAxis.drawLabelsEnabled = false
-        chart.rightAxis.drawGridLinesEnabled = false
-        chart.rightAxis.drawAxisLineEnabled = false
-        chart.data = addData()
-        return chart
+    let entries: [ChartDataEntry]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Group {
+                Text("Company")
+                    .font(.title)
+                Text("Price")
+                    .font(.body)
+                    .offset(x: 5, y: 0)
+            }
+            Line(entries: entries)
+                .padding()
+        }
     }
-
-    // this func is required to conform to UIViewRepresentable protocol
-    func updateUIView(_ uiView: LineChartView, context: Context) {
-        //when data changes chartd.data update is required
-        uiView.data = addData()
-    }
-
-    func addData() -> LineChartData{
-        let data = LineChartData()
-        //BarChartDataSet is an object that contains information about your data, styling and more
-        let dataSet = LineChartDataSet(entries: entries)
-        // change bars color to green
-        dataSet.colors = [NSUIColor.green]
-        //change data label
-        dataSet.label = ""
-
-        dataSet.drawCirclesEnabled = false
-        dataSet.drawValuesEnabled = false
-        data.addDataSet(dataSet)
-        return data
-    }
-
-    typealias UIViewType = LineChartView
-
 }
 
 struct LineView_Previews: PreviewProvider {
