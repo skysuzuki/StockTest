@@ -47,7 +47,7 @@ struct ContentView: View {
                     Label("Home", systemImage: "house")
                 }
                 .tag(Tab.home)
-            SearchHome()
+            SearchHome(searchText: .constant(""))
                 .tabItem {
                     Label("Search", systemImage: "magnifyingglass")
                 }

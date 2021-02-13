@@ -19,6 +19,7 @@ class Stocks: ObservableObject, Identifiable {
     @Published var stockView: StockView?
     @Published var prices = [Double]()
     @Published var currentPrice = "...."
+    @Published var searchResults = [StockSearch]()
     var urlBase = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=00HW87JZWQ30BPUN"
     var baseURL = URL(string: "https://www.alphavantage.co/query?")!
     //https://www.alphavantage.co/query?function=TIME_SERIES_DILY&symbol=TESLA&"

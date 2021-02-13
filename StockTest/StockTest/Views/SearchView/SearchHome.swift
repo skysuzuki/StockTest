@@ -8,13 +8,20 @@
 import SwiftUI
 
 struct SearchHome: View {
+
+    @Binding var searchText: String
+    
     var body: some View {
-        Text("This is for searching")
+        VStack{
+            SearchBarView(text: $searchText)
+                
+        }
+            //List(
     }
 }
 
 struct SearchHome_Previews: PreviewProvider {
     static var previews: some View {
-        SearchHome()
+        SearchHome(searchText: .constant("Search"))
     }
 }
