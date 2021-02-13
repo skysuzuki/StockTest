@@ -26,6 +26,7 @@ struct ContentView: View {
     }
 
     @ObservedObject var stockModel = StockListViewModel()
+    @ObservedObject var tempStock = Stocks("CRSR")
 
 //    @ObservedObject var crsrStock = Stocks("CRSR")
 //    @ObservedObject var applStock = Stocks("AAPL")
@@ -47,22 +48,12 @@ struct ContentView: View {
                     Label("Home", systemImage: "house")
                 }
                 .tag(Tab.home)
-            SearchHome(searchText: .constant(""))
+            SearchHome(stockResults: $tempStock.searchResults,
+                       stock: tempStock)
                 .tabItem {
                     Label("Search", systemImage: "magnifyingglass")
                 }
                 .tag(Tab.search)
-//            CategoryHome()
-//                .tabItem {
-//                    Label("Featured", systemImage: "star")
-//                }
-//                .tag(Tab.featured)
-//
-//            LandmarkList()
-//                .tabItem {
-//                    Label("List", systemImage: "list.bullet")
-//                }
-//                .tag(Tab.list)
         }
 
 

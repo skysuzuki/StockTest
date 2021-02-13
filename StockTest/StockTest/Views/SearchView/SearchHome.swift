@@ -9,19 +9,33 @@ import SwiftUI
 
 struct SearchHome: View {
 
-    @Binding var searchText: String
-    
+    @State private var searchText: String = ""
+    //let stock: Stocks
+    @Binding var stockResults: [StockSearch]
+
+    let stock: Stocks
+
     var body: some View {
-        VStack{
-            SearchBarView(text: $searchText)
-                
+        NavigationView {
+            VStack {
+                SearchBar(text: $searchText, stock: stock)
+                List {
+                    ForEach(stockResults, id: \.self) { stock in
+                        HStack{
+                            Text(stock.symbol)
+                            Spacer()
+                            Text(stock.name)
+                        }
+                    }
+                }
+            }
+            .navigationBarTitle(Text("Search Stocks"))
         }
-            //List(
     }
 }
 
 struct SearchHome_Previews: PreviewProvider {
     static var previews: some View {
-        SearchHome(searchText: .constant("Search"))
+        SearchHome(stockResults: .constant([StockSearch(symbol: "TSLA", name: "TESLA")]), stock: Stocks("TSLA"))
     }
 }

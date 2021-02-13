@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct StockSearch: Codable {
+struct StockSearch: Codable, Hashable {
     let symbol: String
     let name: String
 

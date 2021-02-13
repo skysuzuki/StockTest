@@ -31,7 +31,37 @@ class Stocks: ObservableObject, Identifiable {
     init(_ id: String) {
         self.id = id
     }
-    
+
+    func searchStocks(_ search: String) {
+        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+        urlComponents?.queryItems = [
+            URLQueryItem(name: "function", value: "SYMBOL_SEARCH"),
+            URLQueryItem(name: "keywords", value: search),
+            URLQueryItem(name: "apikey", value: apikey)
+        ]
+
+        guard let requestURL = urlComponents?.url else { return }
+
+        URLSession.shared.dataTaskPublisher(for: requestURL)
+            .map { output in
+                return output.data
+            }
+            .decode(type: [String: [StockSearch]].self, decoder: JSONDecoder())
+            .sink(receiveCompletion: { _ in
+                print("completed search")
+            }, receiveValue: { value in
+
+                guard let searchData = value["bestMatches"] else { return }
+                DispatchQueue.main.async {
+                    self.searchResults = searchData
+                    print(searchData)
+                }
+            })
+            .store(in: &cancellable)
+
+
+    }
+
     func fetchStockView() {
 
         var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
@@ -57,7 +87,7 @@ class Stocks: ObservableObject, Identifiable {
                 }
             })
             .store(in: &cancellable)
-        }
+    }
 
     // Functionc call to fetch stock data for 1 Day and 1 week
     func fetchStockPrice(_ symbol: String) {
@@ -166,6 +196,7 @@ class Stocks: ObservableObject, Identifiable {
                 }
             })
             .store(in: &cancellable)
+
     }
 
     // MARK: HELPERS
@@ -213,7 +244,7 @@ class Stocks: ObservableObject, Identifiable {
         guard let stockData = orderedDates else { return nil }
 
         let stockCount = self.stockCountForInterval(interval)
-
+        
         var stockPrices = [Double]()
         for(_, stock) in stockData {
             if stockPrices.count < stockCount {
