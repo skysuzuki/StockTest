@@ -25,6 +25,8 @@
 		BB5E585425D639F50031FEAD /* StockHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E585325D639F50031FEAD /* StockHome.swift */; };
 		BB5E585825D679A60031FEAD /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E585725D679A60031FEAD /* ModelData.swift */; };
 		BB5E585B25D729670031FEAD /* SearchHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E585A25D729670031FEAD /* SearchHome.swift */; };
+		BB5E586425D735C10031FEAD /* StockListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E586325D735C10031FEAD /* StockListViewModel.swift */; };
+		BB5E586725D737240031FEAD /* StockListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E586625D737240031FEAD /* StockListItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		BB5E585325D639F50031FEAD /* StockHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHome.swift; sourceTree = "<group>"; };
 		BB5E585725D679A60031FEAD /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		BB5E585A25D729670031FEAD /* SearchHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHome.swift; sourceTree = "<group>"; };
+		BB5E586325D735C10031FEAD /* StockListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockListViewModel.swift; sourceTree = "<group>"; };
+		BB5E586625D737240031FEAD /* StockListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockListItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +127,8 @@
 				BB37A99925D5A89100E5E4DC /* StockPrice.swift */,
 				BB37A9C225D5D60F00E5E4DC /* StockView.swift */,
 				BB5E585725D679A60031FEAD /* ModelData.swift */,
+				BB5E586325D735C10031FEAD /* StockListViewModel.swift */,
+				BB5E586625D737240031FEAD /* StockListItem.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -315,7 +321,9 @@
 				BB37A99025D514A700E5E4DC /* StockTest.xcdatamodeld in Sources */,
 				BB37A98425D514A300E5E4DC /* StockTestApp.swift in Sources */,
 				BB37A9C325D5D60F00E5E4DC /* StockView.swift in Sources */,
+				BB5E586725D737240031FEAD /* StockListItem.swift in Sources */,
 				BB5E585825D679A60031FEAD /* ModelData.swift in Sources */,
+				BB5E586425D735C10031FEAD /* StockListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

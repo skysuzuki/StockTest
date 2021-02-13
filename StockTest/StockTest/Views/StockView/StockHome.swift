@@ -15,14 +15,12 @@ struct StockHome: View {
         NavigationView {
             List {
                 ForEach(stocks) { stock in
-                    if let stockView = stock.stockView {
-                        ZStack {
-                            StockRow(stock: stockView, name: stock.getStockFullName(stock.id))
-                            NavigationLink(
-                                destination: LineView(stock: stock)) {
-                                EmptyView()
-                            }.buttonStyle(PlainButtonStyle())
-                        }
+                    ZStack {
+                        StockRow(stock: stock, name: stock.getStockFullName(stock.id))
+                        NavigationLink(
+                            destination: LineView(stock: stock)) {
+                            EmptyView()
+                        }.buttonStyle(PlainButtonStyle())
                     }
                 }
             }

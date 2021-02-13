@@ -25,21 +25,24 @@ struct ContentView: View {
         case search
     }
 
-    @ObservedObject var crsrStock = Stocks("CRSR")
-    @ObservedObject var applStock = Stocks("AAPL")
-    @ObservedObject var bcrxStock = Stocks("BCRX")
-    @ObservedObject var tslaStock = Stocks("TSLA")
-    @ObservedObject var elyStock = Stocks("ELY")
-    @ObservedObject var gmeStock = Stocks("GME")
+    @ObservedObject var stockModel = StockListViewModel()
+
+//    @ObservedObject var crsrStock = Stocks("CRSR")
+//    @ObservedObject var applStock = Stocks("AAPL")
+//    @ObservedObject var bcrxStock = Stocks("BCRX")
+//    @ObservedObject var tslaStock = Stocks("TSLA")
+//    @ObservedObject var elyStock = Stocks("ELY")
+//    @ObservedObject var gmeStock = Stocks("GME")
 
     init() {
+        stockModel.getStockViews()
         //stocks.fetchStockViews()
         //stocks.fetchStockPrice("CRSR", .intraday)
     }
 
     var body: some View {
         TabView(selection: $selection) {
-            StockHome(stocks: [crsrStock, applStock, bcrxStock, tslaStock, elyStock, gmeStock])
+            StockHome(stocks: stockModel.stocks)
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }

@@ -28,42 +28,35 @@ class Stocks: ObservableObject, Identifiable {
     private var apikey = "00HW87JZWQ30BPUN"
 
     init(_ id: String) {
-        //fetchStockPrice()
         self.id = id
-        fetchStockView(id) {}
     }
-
-    func fetchStockViews() {
-    }
-
     
-    private func fetchStockView(_ symbol: String, completion: @escaping() -> Void) {
+    func fetchStockView() {
 
         var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
         urlComponents?.queryItems = [
             URLQueryItem(name: "function", value: "GLOBAL_QUOTE"),
-            URLQueryItem(name: "symbol", value: symbol),
+            URLQueryItem(name: "symbol", value: self.id),
             URLQueryItem(name: "apikey", value: apikey)
         ]
 
-        guard let requestURL = urlComponents?.url else { completion(); return }
+        guard let requestURL = urlComponents?.url else { return }
 
-        URLSession.shared.dataTask(with: requestURL) { data,_,_ in
-            guard let data = data else { completion(); return }
-
-            let jsonDecoder = JSONDecoder()
-            do {
-                let stockViews = try jsonDecoder.decode([String: StockView].self, from: data)
-                DispatchQueue.main.async {
-                    print("\(symbol)")
-                    self.stockView = stockViews["Global Quote"]
-                }
-            } catch {
-                print("Error decoding Stock Global View")
+        URLSession.shared.dataTaskPublisher(for: requestURL)
+            .map { output in
+                return output.data
             }
-            completion()
-        }.resume()
-    }
+            .decode(type: [String: StockView].self, decoder: JSONDecoder())
+            .sink(receiveCompletion: { _ in
+                print("completed \(self.id)")
+            }, receiveValue: { value in
+
+                DispatchQueue.main.async {
+                    self.stockView = value["Global Quote"]
+                }
+            })
+            .store(in: &cancellable)
+        }
 
     // Functionc call to fetch stock data for 1 Day and 1 week
     func fetchStockPrice(_ symbol: String) {
