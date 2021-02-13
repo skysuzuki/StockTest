@@ -17,7 +17,7 @@ enum stockFunction: String {
 
 class Stocks: ObservableObject, Identifiable {
 
-
+    private let moc = PersistenceController.shared.container
 
     @Published var stockView: StockView?
     @Published var prices = [Double]()
@@ -85,10 +85,54 @@ class Stocks: ObservableObject, Identifiable {
             }, receiveValue: { value in
 
                 DispatchQueue.main.async {
-                    self.stockView = value["Global Quote"]
+                    if let stock = value["Global Quote"] {
+                        self.stockView = stock
+                        do {
+                            try self.updateStockViews(with: stock)
+                        } catch {
+                            print("Error updating")
+                        }
+                    }
                 }
             })
             .store(in: &cancellable)
+    }
+
+    func updateStockView(stock: Stock, with stockView: StockView) {
+        stock.change = Double(stockView.change) ?? 0.00
+        stock.price = Double(stockView.price) ?? 0.00
+        stock.changePercent = Double(stockView.changePercent) ?? 0.00
+    }
+
+    func updateStockViews(with stockView: StockView) throws {
+
+        let representationBySymbol = [stockView.symbol : stockView]
+
+        let fetchRequest: NSFetchRequest<Stock> = Stock.fetchRequest()
+        //fetchRequest.predicate = NSPredicate(format: "symbol IN %@", stockView.symbol)
+
+        let context = moc.newBackgroundContext()
+        context.perform {
+            do {
+                let existingStocks = try context.fetch(fetchRequest)
+
+                for stock in existingStocks {
+                    guard let stockView = representationBySymbol[stock.symbol] else { continue }
+
+                    self.updateStockView(stock: stock, with: stockView)
+                }
+            } catch {
+                print("Error fetching entries for UUIDs: \(error)")
+            }
+        }
+
+        context.performAndWait {
+            do {
+                try context.save()
+            } catch {
+                print("error saving")
+            }
+        }
     }
 
     // Functionc call to fetch stock data for 1 Day and 1 week

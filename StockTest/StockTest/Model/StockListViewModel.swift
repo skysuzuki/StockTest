@@ -27,21 +27,22 @@ class StockListViewModel: ObservableObject {
 
         let isStocksLoaded = UserDefaults.standard.bool(forKey: "isStocksLoaded")
         if (!isStocksLoaded) {
-            addStock(symbol: "CRSR")
-            addStock(symbol: "AAPL")
-            addStock(symbol: "BCRX")
-            addStock(symbol: "TSLA")
-            addStock(symbol: "ELY")
-            addStock(symbol: "GME")
+            addStock(symbol: "CRSR", stockName: "Corsair")
+            addStock(symbol: "AAPL", stockName: "Apple")
+            addStock(symbol: "BCRX", stockName: "Bio")
+            addStock(symbol: "TSLA", stockName: "Tesla")
+            addStock(symbol: "ELY", stockName: "Calloway")
+            addStock(symbol: "GME", stockName: "GameStop")
             UserDefaults.standard.set(true, forKey: "isStocksLoaded")
             print("first Load")
         }
     }
 
-    private func addStock(symbol: String) {
+    private func addStock(symbol: String, stockName: String) {
 
         let newStock = Stock(context: moc)
         newStock.symbol = symbol
+        newStock.stockName = stockName
         saveContext()
     }
 

@@ -9,13 +9,15 @@ import SwiftUI
 
 struct StockRow: View {
 
-    let stock: Stocks
+    let symbol: String
     let name: String
+    let price: Float
+    let change: Double
 
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(stock.stockView?.symbol ?? stock.id)
+                Text(symbol)
                     .font(.custom("Arial", size: 22))
                     .fontWeight(.bold)
                     .foregroundColor(Color.black)
@@ -26,10 +28,10 @@ struct StockRow: View {
             }
             Spacer()
             VStack {
-                Button(String(format: "$%.2f", Float(stock.stockView?.price ?? "0.00")!)) {}
+                Button(String(format: "$%.2f", price)) {}
                     .frame(width: 75, height: 30)
                     .padding(5)
-                    .background(Double(stock.stockView?.change ?? "0.00")! > 0.0 ? Color.green : Color.red)
+                    .background(change > 0.0 ? Color.green : Color.red)
                     .foregroundColor(Color.white)
                     .cornerRadius(10)
             }
@@ -39,6 +41,7 @@ struct StockRow: View {
 
 struct StockRow_Previews: PreviewProvider {
     static var previews: some View {
-        StockRow(stock: Stocks("CRSR"), name: "Test")
+        StockRow(symbol: "CRSR", name: "Corsair", price: 0.000, change: 0.1)
+                    
     }
 }
