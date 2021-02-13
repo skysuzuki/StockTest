@@ -13,11 +13,6 @@ import Charts
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
-
     @State private var selection: Tab = .home
 
     enum Tab {
@@ -28,12 +23,14 @@ struct ContentView: View {
     @ObservedObject var stockModel = StockListViewModel()
     @ObservedObject var tempStock = Stocks("CRSR")
 
-//    @ObservedObject var crsrStock = Stocks("CRSR")
-//    @ObservedObject var applStock = Stocks("AAPL")
-//    @ObservedObject var bcrxStock = Stocks("BCRX")
-//    @ObservedObject var tslaStock = Stocks("TSLA")
-//    @ObservedObject var elyStock = Stocks("ELY")
-//    @ObservedObject var gmeStock = Stocks("GME")
+
+
+    //    @ObservedObject var crsrStock = Stocks("CRSR")
+    //    @ObservedObject var applStock = Stocks("AAPL")
+    //    @ObservedObject var bcrxStock = Stocks("BCRX")
+    //    @ObservedObject var tslaStock = Stocks("TSLA")
+    //    @ObservedObject var elyStock = Stocks("ELY")
+    //    @ObservedObject var gmeStock = Stocks("GME")
 
     init() {
         stockModel.getStockViews()
@@ -43,7 +40,7 @@ struct ContentView: View {
 
     var body: some View {
         TabView(selection: $selection) {
-            StockHome(stocks: stockModel.stocks)
+            StockHome()
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
@@ -55,53 +52,36 @@ struct ContentView: View {
                 }
                 .tag(Tab.search)
         }
-
-
-            //        List {
-            //            ForEach(items) { item in
-            //                Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-            //            }
-            //            .onDelete(perform: deleteItems)
-            //        }
-            //        .toolbar {
-            //            #if os(iOS)
-            //            EditButton()
-            //            #endif
-            //
-            //            Button(action: addItem) {
-            //                Label("Add Item", systemImage: "plus")
-            //            }
-            //        }
     }
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+    private func addStock() {
 
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
+        let newStock = Stock(context: viewContext)
+        newStock.symbol = "TSLA"
+
+        saveContext()
     }
 
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
+//    private func deleteItems(offsets: IndexSet) {
+//        withAnimation {
+//            offsets.map { stocks[$0] }.forEach(viewContext.delete)
+//
+//            do {
+//                try viewContext.save()
+//            } catch {
+//                // Replace this implementation with code to handle the error appropriately.
+//                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//                let nsError = error as NSError
+//                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+//            }
+//        }
+//    }
 
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+    func saveContext() {
+        do {
+            try viewContext.save()
+        } catch {
+            print("Error saving managed object context: \(error)")
         }
     }
 }

@@ -29,6 +29,8 @@
 		BB5E586725D737240031FEAD /* StockListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E586625D737240031FEAD /* StockListItem.swift */; };
 		BB5E586A25D75FF80031FEAD /* StockSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E586925D75FF80031FEAD /* StockSearch.swift */; };
 		BB5E587025D770450031FEAD /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E586F25D770450031FEAD /* SearchBar.swift */; };
+		BB5E588925D7E4D40031FEAD /* Stock+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E588725D7E4D40031FEAD /* Stock+CoreDataClass.swift */; };
+		BB5E588A25D7E4D40031FEAD /* Stock+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E588825D7E4D40031FEAD /* Stock+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +60,8 @@
 		BB5E586625D737240031FEAD /* StockListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockListItem.swift; sourceTree = "<group>"; };
 		BB5E586925D75FF80031FEAD /* StockSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockSearch.swift; sourceTree = "<group>"; };
 		BB5E586F25D770450031FEAD /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		BB5E588725D7E4D40031FEAD /* Stock+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stock+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		BB5E588825D7E4D40031FEAD /* Stock+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stock+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +106,8 @@
 		BB37A98225D514A300E5E4DC /* StockTest */ = {
 			isa = PBXGroup;
 			children = (
+				BB5E588725D7E4D40031FEAD /* Stock+CoreDataClass.swift */,
+				BB5E588825D7E4D40031FEAD /* Stock+CoreDataProperties.swift */,
 				BB37A9B825D5D0A900E5E4DC /* Views */,
 				BB37A9A025D5ABF100E5E4DC /* Helpers */,
 				BB37A99C25D5AA8300E5E4DC /* Model */,
@@ -313,6 +319,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB5E588925D7E4D40031FEAD /* Stock+CoreDataClass.swift in Sources */,
 				BB37A9B125D5B67600E5E4DC /* Path+Extension.swift in Sources */,
 				BB37A99E25D5AB5A00E5E4DC /* String+Extension.swift in Sources */,
 				BB37A98D25D514A700E5E4DC /* Persistence.swift in Sources */,
@@ -332,6 +339,7 @@
 				BB5E587025D770450031FEAD /* SearchBar.swift in Sources */,
 				BB5E585825D679A60031FEAD /* ModelData.swift in Sources */,
 				BB5E586425D735C10031FEAD /* StockListViewModel.swift in Sources */,
+				BB5E588A25D7E4D40031FEAD /* Stock+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

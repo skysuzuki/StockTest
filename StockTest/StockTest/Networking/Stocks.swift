@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import CoreData
 
 enum stockFunction: String {
     case intraday = "TIME_SERIES_INTRADAY"
@@ -15,6 +16,8 @@ enum stockFunction: String {
 }
 
 class Stocks: ObservableObject, Identifiable {
+
+
 
     @Published var stockView: StockView?
     @Published var prices = [Double]()
@@ -54,7 +57,6 @@ class Stocks: ObservableObject, Identifiable {
                 guard let searchData = value["bestMatches"] else { return }
                 DispatchQueue.main.async {
                     self.searchResults = searchData
-                    print(searchData)
                 }
             })
             .store(in: &cancellable)
