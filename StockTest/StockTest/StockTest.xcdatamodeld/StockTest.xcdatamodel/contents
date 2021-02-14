@@ -2,7 +2,12 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19H524" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Price" representedClassName="Price" syncable="YES">
         <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="stock" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="prices" inverseEntity="Stock"/>
+        <relationship name="daily" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="dailyPrices" inverseEntity="Stock"/>
+        <relationship name="fiveYear" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="fiveYPrices" inverseEntity="Stock"/>
+        <relationship name="month" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="oneMPrices" inverseEntity="Stock"/>
+        <relationship name="threeMonth" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="threeMPrices" inverseEntity="Stock"/>
+        <relationship name="weekly" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="weekPrices" inverseEntity="Stock"/>
+        <relationship name="year" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="oneYPrices" inverseEntity="Stock"/>
     </entity>
     <entity name="Stock" representedClassName="Stock" syncable="YES">
         <attribute name="change" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -10,10 +15,15 @@
         <attribute name="currPrice" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="stockName" attributeType="String"/>
         <attribute name="symbol" attributeType="String"/>
-        <relationship name="prices" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Price" inverseName="stock" inverseEntity="Price"/>
+        <relationship name="dailyPrices" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Price" inverseName="daily" inverseEntity="Price"/>
+        <relationship name="fiveYPrices" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Price" inverseName="fiveYear" inverseEntity="Price"/>
+        <relationship name="oneMPrices" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Price" inverseName="month" inverseEntity="Price"/>
+        <relationship name="oneYPrices" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Price" inverseName="year" inverseEntity="Price"/>
+        <relationship name="threeMPrices" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Price" inverseName="threeMonth" inverseEntity="Price"/>
+        <relationship name="weekPrices" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Price" inverseName="weekly" inverseEntity="Price"/>
     </entity>
     <elements>
-        <element name="Price" positionX="-36" positionY="36" width="128" height="73"/>
-        <element name="Stock" positionX="-250.82421875" positionY="-89.83984375" width="128" height="133"/>
+        <element name="Price" positionX="66.4140625" positionY="105.37109375" width="128" height="148"/>
+        <element name="Stock" positionX="-250.82421875" positionY="-89.83984375" width="128" height="208"/>
     </elements>
 </model>

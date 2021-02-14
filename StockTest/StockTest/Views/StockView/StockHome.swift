@@ -40,7 +40,7 @@ struct StockHome: View {
         let stock = stocks.first {
             $0.symbol == symbol
         }
-        if let prices = stock?.prices {
+        if let prices = stock?.dailyPrices {
             for price in prices {
                 if let priceDescription = price as? Price {
                     result.append(priceDescription.price)

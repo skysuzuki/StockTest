@@ -29,11 +29,11 @@
 		BB5E586725D737240031FEAD /* StockListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E586625D737240031FEAD /* StockListItem.swift */; };
 		BB5E586A25D75FF80031FEAD /* StockSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E586925D75FF80031FEAD /* StockSearch.swift */; };
 		BB5E587025D770450031FEAD /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E586F25D770450031FEAD /* SearchBar.swift */; };
-		BB5E58B125D891B90031FEAD /* Price+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E58AD25D891B90031FEAD /* Price+CoreDataClass.swift */; };
-		BB5E58B225D891B90031FEAD /* Price+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E58AE25D891B90031FEAD /* Price+CoreDataProperties.swift */; };
-		BB5E58B925D892580031FEAD /* Stock+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E58B725D892580031FEAD /* Stock+CoreDataClass.swift */; };
-		BB5E58BA25D892580031FEAD /* Stock+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E58B825D892580031FEAD /* Stock+CoreDataProperties.swift */; };
 		BB5E58C225D90E630031FEAD /* StockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E58C125D90E630031FEAD /* StockController.swift */; };
+		BB5E58C925D9D8F80031FEAD /* Price+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E58C525D9D8F80031FEAD /* Price+CoreDataClass.swift */; };
+		BB5E58CA25D9D8F80031FEAD /* Price+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E58C625D9D8F80031FEAD /* Price+CoreDataProperties.swift */; };
+		BB5E58CB25D9D8F80031FEAD /* Stock+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E58C725D9D8F80031FEAD /* Stock+CoreDataClass.swift */; };
+		BB5E58CC25D9D8F80031FEAD /* Stock+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E58C825D9D8F80031FEAD /* Stock+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,11 +63,11 @@
 		BB5E586625D737240031FEAD /* StockListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockListItem.swift; sourceTree = "<group>"; };
 		BB5E586925D75FF80031FEAD /* StockSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockSearch.swift; sourceTree = "<group>"; };
 		BB5E586F25D770450031FEAD /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
-		BB5E58AD25D891B90031FEAD /* Price+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Price+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		BB5E58AE25D891B90031FEAD /* Price+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Price+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		BB5E58B725D892580031FEAD /* Stock+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stock+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		BB5E58B825D892580031FEAD /* Stock+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stock+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		BB5E58C125D90E630031FEAD /* StockController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockController.swift; sourceTree = "<group>"; };
+		BB5E58C525D9D8F80031FEAD /* Price+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Price+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		BB5E58C625D9D8F80031FEAD /* Price+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Price+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		BB5E58C725D9D8F80031FEAD /* Stock+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stock+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		BB5E58C825D9D8F80031FEAD /* Stock+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stock+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,10 +207,10 @@
 		BB5E589125D8504A0031FEAD /* ManagedObjects */ = {
 			isa = PBXGroup;
 			children = (
-				BB5E58B725D892580031FEAD /* Stock+CoreDataClass.swift */,
-				BB5E58B825D892580031FEAD /* Stock+CoreDataProperties.swift */,
-				BB5E58AD25D891B90031FEAD /* Price+CoreDataClass.swift */,
-				BB5E58AE25D891B90031FEAD /* Price+CoreDataProperties.swift */,
+				BB5E58C525D9D8F80031FEAD /* Price+CoreDataClass.swift */,
+				BB5E58C625D9D8F80031FEAD /* Price+CoreDataProperties.swift */,
+				BB5E58C725D9D8F80031FEAD /* Stock+CoreDataClass.swift */,
+				BB5E58C825D9D8F80031FEAD /* Stock+CoreDataProperties.swift */,
 			);
 			path = ManagedObjects;
 			sourceTree = "<group>";
@@ -337,20 +337,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB37A9B125D5B67600E5E4DC /* Path+Extension.swift in Sources */,
+				BB5E58CB25D9D8F80031FEAD /* Stock+CoreDataClass.swift in Sources */,
+				BB5E58C925D9D8F80031FEAD /* Price+CoreDataClass.swift in Sources */,
 				BB37A99E25D5AB5A00E5E4DC /* String+Extension.swift in Sources */,
-				BB5E58B925D892580031FEAD /* Stock+CoreDataClass.swift in Sources */,
-				BB5E58B225D891B90031FEAD /* Price+CoreDataProperties.swift in Sources */,
 				BB37A98D25D514A700E5E4DC /* Persistence.swift in Sources */,
 				BB5E585B25D729670031FEAD /* SearchHome.swift in Sources */,
 				BB5E585425D639F50031FEAD /* StockHome.swift in Sources */,
 				BB5E584C25D6233B0031FEAD /* LineView.swift in Sources */,
+				BB5E58CC25D9D8F80031FEAD /* Stock+CoreDataProperties.swift in Sources */,
 				BB5E586A25D75FF80031FEAD /* StockSearch.swift in Sources */,
-				BB5E58BA25D892580031FEAD /* Stock+CoreDataProperties.swift in Sources */,
 				BB37A9A225D5AC4700E5E4DC /* Stocks.swift in Sources */,
 				BB37A98625D514A300E5E4DC /* ContentView.swift in Sources */,
 				BB5E585125D626FF0031FEAD /* Line.swift in Sources */,
 				BB37A9BC25D5D0F400E5E4DC /* StockRow.swift in Sources */,
-				BB5E58B125D891B90031FEAD /* Price+CoreDataClass.swift in Sources */,
 				BB37A99A25D5A89100E5E4DC /* StockPrice.swift in Sources */,
 				BB5E58C225D90E630031FEAD /* StockController.swift in Sources */,
 				BB37A99025D514A700E5E4DC /* StockTest.xcdatamodeld in Sources */,
@@ -358,6 +357,7 @@
 				BB37A9C325D5D60F00E5E4DC /* StockView.swift in Sources */,
 				BB5E586725D737240031FEAD /* StockListItem.swift in Sources */,
 				BB5E587025D770450031FEAD /* SearchBar.swift in Sources */,
+				BB5E58CA25D9D8F80031FEAD /* Price+CoreDataProperties.swift in Sources */,
 				BB5E585825D679A60031FEAD /* ModelData.swift in Sources */,
 				BB5E586425D735C10031FEAD /* StockListViewModel.swift in Sources */,
 			);

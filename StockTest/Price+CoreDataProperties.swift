@@ -2,7 +2,7 @@
 //  Price+CoreDataProperties.swift
 //  StockTest
 //
-//  Created by Lambda_School_Loaner_204 on 2/13/21.
+//  Created by Lambda_School_Loaner_204 on 2/14/21.
 //
 //
 
@@ -17,7 +17,12 @@ extension Price {
     }
 
     @NSManaged public var price: Double
-    @NSManaged public var stock: Stock?
+    @NSManaged public var daily: Stock?
+    @NSManaged public var year: Stock?
+    @NSManaged public var weekly: Stock?
+    @NSManaged public var month: Stock?
+    @NSManaged public var threeMonth: Stock?
+    @NSManaged public var fiveYear: Stock?
 
 }
 

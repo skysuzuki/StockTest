@@ -2,7 +2,7 @@
 //  Price+CoreDataClass.swift
 //  StockTest
 //
-//  Created by Lambda_School_Loaner_204 on 2/13/21.
+//  Created by Lambda_School_Loaner_204 on 2/14/21.
 //
 //
 

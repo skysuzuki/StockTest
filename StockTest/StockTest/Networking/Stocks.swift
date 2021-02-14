@@ -171,7 +171,7 @@ class Stocks: ObservableObject, Identifiable {
                 let prices = try context.fetch(pricesFetch)
 
                 for price in prices {
-                    if price.stock?.symbol == stocks[0].symbol{
+                    if price.daily?.symbol == stocks[0].symbol{
                         context.delete(price)
                     }
                 }
@@ -191,7 +191,7 @@ class Stocks: ObservableObject, Identifiable {
     func createPrice(with stockPrice: Double, stock: Stock, context: NSManagedObjectContext) {
         let price = Price(context: context)
         price.price = stockPrice
-        price.stock = stock
+        price.daily = stock
         do {
             try context.save()
         } catch {

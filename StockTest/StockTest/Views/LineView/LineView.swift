@@ -91,7 +91,7 @@ struct LineView: View {
 
     private func prices() -> [Double] {
         var result = [Double]()
-        if let prices = stock.prices {
+        if let prices = stock.dailyPrices {
             for price in prices {
                 if let priceDescription = price as? Price {
                     result.append(priceDescription.price)
