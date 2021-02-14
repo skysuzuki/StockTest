@@ -98,7 +98,7 @@ struct LineView: View {
                 }
             }
         }
-        print(result.count)
+        print(result)
         return result
     }
 

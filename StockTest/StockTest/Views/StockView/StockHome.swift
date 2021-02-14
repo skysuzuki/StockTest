@@ -21,13 +21,12 @@ struct StockHome: View {
             List {
                 ForEach(stockController.stocks) { stock in
                     ZStack {
-                        StockRow(symbol: stock.symbol,
-                                 stockName: stock.stockName,
-                                 currPrice: Float(stock.currPrice),
-                                 change: stock.change)
                         NavigationLink(
                             destination: LineView(stock: stock)) {
-                            EmptyView()
+                            StockRow(symbol: stock.symbol,
+                                     stockName: stock.stockName,
+                                     currPrice: Float(stock.currPrice),
+                                     change: stock.change)
                         }.buttonStyle(PlainButtonStyle())
                     }
                 }

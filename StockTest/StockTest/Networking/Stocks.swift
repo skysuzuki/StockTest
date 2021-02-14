@@ -135,23 +135,18 @@ class Stocks: ObservableObject, Identifiable {
         }
     }
 
-    func updateStockPrices(stock: Stock, with prices: [Price]) {
-        for price in prices {
-            stock.addToPrice(price)
-        }
-    }
-
     func addPrice(with price: Double, symbol: String) {
-        let fetchRequest: NSFetchRequest<Stock> = Stock.fetchRequest()
+        let stockFetchRequest: NSFetchRequest<Stock> = Stock.fetchRequest()
+        stockFetchRequest.predicate = NSPredicate(format: "symbol == %@", symbol)
         let context = moc.newBackgroundContext()
         context.perform {
             do {
-                let existingStocks = try context.fetch(fetchRequest)
-                guard let stock = existingStocks.first(where: { $0.symbol == symbol }) else { return }
+                let existingStocks = try context.fetch(stockFetchRequest)
+                //guard let stock = existingStocks.first(where: { $0.symbol == symbol }) else { return }
 
-                self.createPrice(with: price, stock: stock, context: context)
+                self.createPrice(with: price, stock: existingStocks[0], context: context)
             } catch {
-                print("Error fetching entries for UUIDs: \(error)")
+                print("Error fetching entries for \(symbol): \(error)")
             }
         }
 
@@ -164,57 +159,31 @@ class Stocks: ObservableObject, Identifiable {
         }
     }
 
-    func updatePrices() {
-//        let fetchRequest: NSFetchRequest<Stock> = Stock.fetchRequest()
-//        let priceFetch: NSFetchRequest<Price> = Price.fetchRequest()
-//        //fetchRequest.predicate = NSPredicate(format: "symbol IN %@", stockView.symbol)
-//
-//        let context = moc.newBackgroundContext()
-//        context.perform {
-//            do {
-//                let existingStocks = try context.fetch(fetchRequest)
-//                let existingPrices = try context.fetch(priceFetch)
-//                guard let stock = existingStocks.first(where: { $0.symbol == self.id }) else { return }
-//
-//                for price in existingPrices {
-//                    if price.stock == stock {
-//                        print(price.price, price.stock?.symbol)
-//                    }
-//                }
-//            } catch {
-//                print("Error fetching entries for UUIDs: \(error)")
-//            }
-//        }
-//
-//        context.performAndWait {
-//            do {
-//                try context.save()
-//            } catch {
-//                print("error saving")
-//            }
-//        }
+    func removePrices(symbol: String) {
 
+        let stockFetch: NSFetchRequest<Stock> = Stock.fetchRequest()
+        stockFetch.predicate = NSPredicate(format: "symbol == %@", symbol)
+        let pricesFetch: NSFetchRequest<Price> = Price.fetchRequest()
         let context =  PersistenceController.shared.container.viewContext
+        context.perform {
+            do {
+                let stocks = try context.fetch(stockFetch)
+                let prices = try context.fetch(pricesFetch)
+
+                for price in prices {
+                    if price.stock?.symbol == stocks[0].symbol{
+                        context.delete(price)
+                    }
+                }
+            } catch {
+                print("error removing list")
+            }
+        }
         context.performAndWait {
             do {
-                let fetchRequest: NSFetchRequest<Stock> = Stock.fetchRequest()
-                let priceFetch: NSFetchRequest<Price> = Price.fetchRequest()
-
-                let existingStocks = try context.fetch(fetchRequest)
-                let existingPrices = try context.fetch(priceFetch)
-                guard let stock = existingStocks.first(where: { $0.symbol == self.id }) else { return }
-
-                stock.prices = stock.prices?.addingObjects(from: existingPrices) as NSSet?
-//                for price in existingPrices {
-//                    if price.stock == stock {
-//                        stock.mutableSetValue(forKey: "prices").add(price)
-//                        //stock.addToPrice(price)
-//                        //stock.objectWillChange.send()
-//                        print(price.price, price.stock?.symbol)
-//                    }
-//                }
+                try context.save()
             } catch {
-                print(error)
+                print("error saving")
             }
         }
     }
@@ -223,7 +192,6 @@ class Stocks: ObservableObject, Identifiable {
         let price = Price(context: context)
         price.price = stockPrice
         price.stock = stock
-        stock.mutableSetValue(forKey: "prices").add(price)
         do {
             try context.save()
         } catch {
@@ -262,6 +230,8 @@ class Stocks: ObservableObject, Identifiable {
 
                 guard let stockData = orderedDates else { return }
 
+                self.removePrices(symbol: symbol)
+
                 for(_, stock) in stockData {
                     if let stock = Double(stock.close) {
                         if stock > 0.0 {
@@ -274,7 +244,7 @@ class Stocks: ObservableObject, Identifiable {
 
                 DispatchQueue.main.async {
                     self.prices = stockPrices
-                    //self.updatePrices()
+                    print(self.prices)
                     self.currentPrice = stockData.last?.value.close ?? ""
                 }
             })
