@@ -18,27 +18,27 @@ extension Stock {
 
     @NSManaged public var symbol: String
     @NSManaged public var stockName: String
-    @NSManaged public var price: Double
+    @NSManaged public var currPrice: Double
     @NSManaged public var change: Double
     @NSManaged public var changePercent: Double
     @NSManaged public var prices: NSSet?
 
 }
 
-// MARK: Generated accessors for prices
+// MARK: Generated accessors for price
 extension Stock {
 
-    @objc(addPricesObject:)
-    @NSManaged public func addToPrices(_ value: Prices)
+    @objc(addPriceObject:)
+    @NSManaged public func addToPrice(_ value: Price)
 
-    @objc(removePricesObject:)
-    @NSManaged public func removeFromPrices(_ value: Prices)
+    @objc(removePriceObject:)
+    @NSManaged public func removeFromPrice(_ value: Price)
 
-    @objc(addPrices:)
-    @NSManaged public func addToPrices(_ values: NSSet)
+    @objc(addPrice:)
+    @NSManaged public func addToPrice(_ values: NSSet)
 
-    @objc(removePrices:)
-    @NSManaged public func removeFromPrices(_ values: NSSet)
+    @objc(removePrice:)
+    @NSManaged public func removeFromPrice(_ values: NSSet)
 
 }
 

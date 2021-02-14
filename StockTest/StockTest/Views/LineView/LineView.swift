@@ -18,32 +18,35 @@ struct LineView: View {
         "3M",
         "1Y",
         "5Y"]
-    @ObservedObject var stock: Stocks
+    //@ObservedObject var stock: Stocks
     var chartDataTest = [ChartDataEntry]()
 
-    init(stock: Stocks) {
-        self.stock = stock
-        UISegmentedControl.appearance().selectedSegmentTintColor = .green
-        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.black], for: .selected)
-        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
-    }
+    //    let symbol: String
+    //    let stockName: String
+    //    let currPrice: Double
+    //    let change: Double
+    //    var pri: NSSet
+
+    var stock: Stock
+
+    @ObservedObject var stockNetwork: Stocks = Stocks("CRSR")
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Group {
-                Text(stock.id)
+                Text(stock.symbol)
                     .font(.caption)
-                Text(stock.getStockFullName(stock.id))
+                Text(stock.stockName)
                     .font(.title)
                     .bold()
-                Text(String(format: "%.2f", stock.currentPrice))
+                Text(String(format: "%.2f", stock.currPrice))
                     .font(.subheadline)
                     .offset(x: 5, y: 0)
                 HStack {
                     let changeColor = isPositiveChange() ? Color.green : Color.red
                     Image(systemName: isPositiveChange() ? "arrowtriangle.up.fill" : "arrowtriangle.down.fill")
                         .foregroundColor(changeColor)
-                    let changeString = String(format: "%.2f", Float(stock.stockView?.change ?? "0.00")!)
+                    let changeString = String(format: "%.2f", stock.change)
                     Text(changeString)
                         .font(.footnote)
                         .foregroundColor(changeColor)
@@ -51,7 +54,7 @@ struct LineView: View {
             }
             .offset(x: 20, y: 20)
             VStack(alignment: .center, spacing: 8) {
-                Line(prices: stock.prices)
+                Line(prices: prices())
                     .padding()
                 HStack(alignment: .center) {
                     ForEach(intervals, id: \.self) { interval in
@@ -61,7 +64,7 @@ struct LineView: View {
                             Text(interval)
                                 .font(.system(size: 15))
                                 .foregroundColor(interval == currInterval ? Color.white
-                                    : Color.green)
+                                                    : Color.green)
                                 .animation(nil)
                         })
                         .frame(width: 35)
@@ -76,30 +79,38 @@ struct LineView: View {
             }
         }
         .onAppear() {
-            self.stock.fetchStockPrice(stock.id)
+            self.stockNetwork.fetchStockPrice(stock.symbol)
         }
         .navigationBarTitleDisplayMode(.inline)
     }
 
     private func isPositiveChange() -> Bool {
-        if let stockView = stock.stockView,
-           let change = Double(stockView.change) {
-            if change > 0 { return true }
-            else { return false }
-        } else {
-            return false
+        if stock.change > 0 { return true }
+        else { return false }
+    }
+
+    private func prices() -> [Double] {
+        var result = [Double]()
+        if let prices = stock.prices {
+            for price in prices {
+                if let priceDescription = price as? Price {
+                    result.append(priceDescription.price)
+                }
+            }
         }
+        print(result.count)
+        return result
     }
 
     private func priceForInterval(_ interval: String) {
         currInterval = interval
         switch interval {
         case "1D":
-            self.stock.fetchStockPrice(stock.id)
+            self.stockNetwork.fetchStockPrice(stock.symbol)
         case "1M", "3M":
-            stock.fetchStockPriceMonthly(stock.id, interval)
+            self.stockNetwork.fetchStockPriceMonthly(stock.symbol, interval)
         case "1Y", "5Y":
-            stock.fetchStockPriceYearly(stock.id, interval)
+            self.stockNetwork.fetchStockPriceYearly(stock.symbol, interval)
         default:
             return
         }
@@ -108,6 +119,6 @@ struct LineView: View {
 
 struct LineView_Previews: PreviewProvider {
     static var previews: some View {
-        LineView(stock: Stocks("CRSR"))
+        LineView(stock: Stock())
     }
 }

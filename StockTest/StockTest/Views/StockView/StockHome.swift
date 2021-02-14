@@ -14,21 +14,42 @@ struct StockHome: View {
         animation: .default)
     private var stocks: FetchedResults<Stock>
 
+    @ObservedObject var stockController = StockController(context: PersistenceController.shared.container.viewContext)
+
     var body: some View {
         NavigationView {
             List {
-                ForEach(stocks) { stock in
+                ForEach(stockController.stocks) { stock in
                     ZStack {
-                        StockRow(symbol: stock.symbol, name: stock.stockName, price: Float(stock.price), change: stock.change)
-//                        NavigationLink(
-//                            destination: LineView(stock: stock)) {
-//                            EmptyView()
-//                        }.buttonStyle(PlainButtonStyle())
+                        StockRow(symbol: stock.symbol,
+                                 stockName: stock.stockName,
+                                 currPrice: Float(stock.currPrice),
+                                 change: stock.change)
+                        NavigationLink(
+                            destination: LineView(stock: stock)) {
+                            EmptyView()
+                        }.buttonStyle(PlainButtonStyle())
                     }
                 }
             }
             .navigationTitle("Stocks")
         }
+    }
+
+    private func prices(symbol: String) -> [Double] {
+        var result = [Double]()
+        let stock = stocks.first {
+            $0.symbol == symbol
+        }
+        if let prices = stock?.prices {
+            for price in prices {
+                if let priceDescription = price as? Price {
+                    result.append(priceDescription.price)
+                }
+            }
+        }
+        print(result.count)
+        return result
     }
 }
 

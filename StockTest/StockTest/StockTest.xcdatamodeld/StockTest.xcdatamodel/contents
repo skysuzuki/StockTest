@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19H524" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Prices" representedClassName="Prices" syncable="YES">
-        <attribute name="open" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+    <entity name="Price" representedClassName="Price" syncable="YES">
+        <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="stock" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stock" inverseName="prices" inverseEntity="Stock"/>
     </entity>
     <entity name="Stock" representedClassName="Stock" syncable="YES">
         <attribute name="change" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="changePercent" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="currPrice" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="stockName" attributeType="String"/>
         <attribute name="symbol" attributeType="String"/>
-        <relationship name="prices" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Prices" inverseName="stock" inverseEntity="Prices"/>
+        <relationship name="prices" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Price" inverseName="stock" inverseEntity="Price"/>
     </entity>
     <elements>
         <element name="Stock" positionX="-250.82421875" positionY="-89.83984375" width="128" height="133"/>
-        <element name="Prices" positionX="-36" positionY="36" width="128" height="73"/>
+        <element name="Price" positionX="-36" positionY="36" width="128" height="73"/>
     </elements>
 </model>

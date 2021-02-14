@@ -23,15 +23,6 @@ struct ContentView: View {
     @ObservedObject var stockModel = StockListViewModel()
     @ObservedObject var tempStock = Stocks("CRSR")
 
-
-
-    //    @ObservedObject var crsrStock = Stocks("CRSR")
-    //    @ObservedObject var applStock = Stocks("AAPL")
-    //    @ObservedObject var bcrxStock = Stocks("BCRX")
-    //    @ObservedObject var tslaStock = Stocks("TSLA")
-    //    @ObservedObject var elyStock = Stocks("ELY")
-    //    @ObservedObject var gmeStock = Stocks("GME")
-
     init() {
         stockModel.getStockViews()
         //stocks.fetchStockViews()
