@@ -73,16 +73,24 @@ class Stocks: ObservableObject, Identifiable {
             URLQueryItem(name: "apikey", value: apikey)
         ]
 
-        guard let requestURL = urlComponents?.url else { return }
+        guard let url = urlComponents?.url else { return }
+        var requestURL = URLRequest(url: url)
+        requestURL.httpMethod = "GET"
 
         URLSession.shared.dataTaskPublisher(for: requestURL)
             .map { output in
                 return output.data
             }
             .decode(type: [String: StockView].self, decoder: JSONDecoder())
-            .sink(receiveCompletion: { _ in
-                print("completed \(self.id)")
-            }, receiveValue: { value in
+            .sink(receiveCompletion: { result in
+                switch result {
+                case .failure(let error):
+                    print("Handle \(error)")
+                case .finished:
+                    print("completed \(self.id)")
+                    break
+                }
+            }) { value in
 
                 DispatchQueue.main.async {
                     if let stock = value["Global Quote"] {
@@ -94,7 +102,7 @@ class Stocks: ObservableObject, Identifiable {
                         }
                     }
                 }
-            })
+            }
             .store(in: &cancellable)
     }
 
@@ -135,7 +143,7 @@ class Stocks: ObservableObject, Identifiable {
         }
     }
 
-    func addPrice(with price: Double, symbol: String) {
+    func addPrice(with price: Double, symbol: String, interval: String?) {
         let stockFetchRequest: NSFetchRequest<Stock> = Stock.fetchRequest()
         stockFetchRequest.predicate = NSPredicate(format: "symbol == %@", symbol)
         let context = moc.newBackgroundContext()
@@ -144,7 +152,7 @@ class Stocks: ObservableObject, Identifiable {
                 let existingStocks = try context.fetch(stockFetchRequest)
                 //guard let stock = existingStocks.first(where: { $0.symbol == symbol }) else { return }
 
-                self.createPrice(with: price, stock: existingStocks[0], context: context)
+                self.createPrice(with: price, stock: existingStocks[0], interval: interval, context: context)
             } catch {
                 print("Error fetching entries for \(symbol): \(error)")
             }
@@ -159,21 +167,39 @@ class Stocks: ObservableObject, Identifiable {
         }
     }
 
-    func removePrices(symbol: String) {
-
-        let stockFetch: NSFetchRequest<Stock> = Stock.fetchRequest()
-        stockFetch.predicate = NSPredicate(format: "symbol == %@", symbol)
+    func removePrices(symbol: String, interval: String?) {
+        //        let stockFetch: NSFetchRequest<Stock> = Stock.fetchRequest()
+        //        stockFetch.predicate = NSPredicate(format: "symbol == %@", symbol)
+        var priceInterval = ""
+        switch interval {
+        case "1W":
+            priceInterval = "weekly"
+        case "1M":
+            priceInterval = "month"
+        case "3M":
+            priceInterval = "threeMonth"
+        case "1Y":
+            priceInterval = "year"
+        case "5Y":
+            priceInterval = "fiveYear"
+        default:
+            priceInterval = "daily"
+        }
         let pricesFetch: NSFetchRequest<Price> = Price.fetchRequest()
+        pricesFetch.predicate = NSPredicate(format: "%K == %@", "\(priceInterval).symbol", symbol)
         let context =  PersistenceController.shared.container.viewContext
         context.perform {
             do {
-                let stocks = try context.fetch(stockFetch)
+                //let stocks = try context.fetch(stockFetch)
                 let prices = try context.fetch(pricesFetch)
 
                 for price in prices {
-                    if price.daily?.symbol == stocks[0].symbol{
-                        context.delete(price)
-                    }
+
+                    context.delete(price)
+
+                    //                    if price.daily?.symbol == stocks[0].symbol{
+                    //                        context.delete(price)
+                    //                    }
                 }
             } catch {
                 print("error removing list")
@@ -188,10 +214,28 @@ class Stocks: ObservableObject, Identifiable {
         }
     }
 
-    func createPrice(with stockPrice: Double, stock: Stock, context: NSManagedObjectContext) {
+    func createPrice(with stockPrice: Double, stock: Stock, interval: String?, context: NSManagedObjectContext) {
         let price = Price(context: context)
         price.price = stockPrice
-        price.daily = stock
+
+        if let inter = interval {
+            switch inter {
+            case "1W":
+                price.weekly = stock
+            case "1M":
+                price.month = stock
+            case "3M":
+                price.threeMonth = stock
+            case "1Y":
+                price.year = stock
+            case "5Y":
+                price.fiveYear = stock
+            default:
+                return
+            }
+        } else {
+            price.daily = stock
+        }
         do {
             try context.save()
         } catch {
@@ -210,16 +254,24 @@ class Stocks: ObservableObject, Identifiable {
             URLQueryItem(name: "apikey", value: apikey)
         ]
 
-        guard let requestURL = urlComponents?.url else { return }
+        guard let url = urlComponents?.url else { return }
+        var requestURL = URLRequest(url: url)
+        requestURL.httpMethod = "GET"
 
         URLSession.shared.dataTaskPublisher(for: requestURL)
             .map { output in
                 return output.data
             }
             .decode(type: StocksMinute.self, decoder: JSONDecoder())
-            .sink(receiveCompletion: { _ in
-                print("completed \(self.id)")
-            }, receiveValue: { value in
+            .sink(receiveCompletion: { result in
+                switch result {
+                case .failure(let error):
+                    print("Handle \(error)")
+                case .finished:
+                    print("completed \(self.id)")
+                    break
+                }
+            }) { value in
 
                 var stockPrices = [Double]()
 
@@ -230,24 +282,23 @@ class Stocks: ObservableObject, Identifiable {
 
                 guard let stockData = orderedDates else { return }
 
-                self.removePrices(symbol: symbol)
+                self.removePrices(symbol: symbol, interval: nil)
 
                 for(_, stock) in stockData {
                     if let stock = Double(stock.close) {
                         if stock > 0.0 {
                             stockPrices.append(stock)
 
-                            self.addPrice(with: stock, symbol: symbol)
+                            self.addPrice(with: stock, symbol: symbol, interval: nil)
                         }
                     }
                 }
 
                 DispatchQueue.main.async {
                     self.prices = stockPrices
-                    print(self.prices)
                     self.currentPrice = stockData.last?.value.close ?? ""
                 }
-            })
+            }
             .store(in: &cancellable)
     }
 
@@ -262,24 +313,32 @@ class Stocks: ObservableObject, Identifiable {
             URLQueryItem(name: "apikey", value: apikey)
         ]
 
-        guard let requestURL = urlComponents?.url else { return }
+        guard let url = urlComponents?.url else { return }
+        var requestURL = URLRequest(url: url)
+        requestURL.httpMethod = "GET"
 
         URLSession.shared.dataTaskPublisher(for: requestURL)
             .map { output in
                 return output.data
             }
             .decode(type: StocksDaily.self, decoder: JSONDecoder())
-            .sink(receiveCompletion: { _ in
-                print("completed \(self.id)")
-            }, receiveValue: { value in
+            .sink(receiveCompletion: { result in
+                switch result {
+                case .failure(let error):
+                    print("Handle \(error)")
+                case .finished:
+                    print("completed \(self.id)")
+                    break
+                }
+            }) { value in
 
-                guard let stockPrices = self.sortStockByDate(value.timeSeries, interval) else { return }
+                guard let stockPrices = self.sortStockByDate(value.timeSeries, symbol: symbol, interval) else { return }
 
                 DispatchQueue.main.async {
                     self.prices = stockPrices
                     //self.currentPrice = stockData.last?.value.close ?? ""
                 }
-            })
+            }
             .store(in: &cancellable)
     }
 
@@ -292,24 +351,32 @@ class Stocks: ObservableObject, Identifiable {
             URLQueryItem(name: "apikey", value: apikey)
         ]
 
-        guard let requestURL = urlComponents?.url else { return }
+        guard let url = urlComponents?.url else { return }
+        var requestURL = URLRequest(url: url)
+        requestURL.httpMethod = "GET"
 
         URLSession.shared.dataTaskPublisher(for: requestURL)
             .map { output in
                 return output.data
             }
             .decode(type: StocksWeekly.self, decoder: JSONDecoder())
-            .sink(receiveCompletion: { _ in
-                print("completed \(self.id)")
-            }, receiveValue: { value in
+            .sink(receiveCompletion: { result in
+                switch result {
+                case .failure(let error):
+                    print("Handle \(error)")
+                case .finished:
+                    print("completed \(self.id)")
+                    break
+                }
+            }) { value in
 
-                guard let stockPrices = self.sortStockByDate(value.timeSeries, interval) else { return }
+                guard let stockPrices = self.sortStockByDate(value.timeSeries, symbol: symbol, interval) else { return }
 
                 DispatchQueue.main.async {
                     self.prices = stockPrices
                     //self.currentPrice = stockData.last?.value.close ?? ""
                 }
-            })
+            }
             .store(in: &cancellable)
 
     }
@@ -350,7 +417,7 @@ class Stocks: ObservableObject, Identifiable {
     }
 
     // Returns the stock prices sorted by data
-    private func sortStockByDate(_ timeSeries: [String : StockPrice]?, _ interval: String) -> [Double]? {
+    private func sortStockByDate(_ timeSeries: [String : StockPrice]?, symbol: String, _ interval: String) -> [Double]? {
         let orderedDates = timeSeries?.sorted {
             guard let d1 = $0.key.stringDateDaily, let d2 = $1.key.stringDateDaily else { return false }
             return d1 < d2
@@ -359,6 +426,8 @@ class Stocks: ObservableObject, Identifiable {
         guard let stockData = orderedDates else { return nil }
 
         let stockCount = self.stockCountForInterval(interval)
+
+        self.removePrices(symbol: symbol, interval: interval)
         
         var stockPrices = [Double]()
         for(_, stock) in stockData {
@@ -366,11 +435,11 @@ class Stocks: ObservableObject, Identifiable {
                 if let stock = Double(stock.close) {
                     if stock > 0.0 {
                         stockPrices.append(stock)
+                        self.addPrice(with: stock, symbol: symbol, interval: interval)
                     }
                 }
             }
         }
-        print(stockPrices.count)
         return stockPrices
     }
 }

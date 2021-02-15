@@ -26,7 +26,7 @@ extension Stock {
     @NSManaged public var oneMPrices: NSOrderedSet?
     @NSManaged public var threeMPrices: NSOrderedSet?
     @NSManaged public var oneYPrices: NSOrderedSet?
-    @NSManaged public var fiveYPrices: Price?
+    @NSManaged public var fiveYPrices: NSOrderedSet?
 
 }
 

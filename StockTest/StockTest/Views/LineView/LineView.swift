@@ -54,7 +54,7 @@ struct LineView: View {
             }
             .offset(x: 20, y: 20)
             VStack(alignment: .center, spacing: 8) {
-                Line(prices: prices())
+                Line(prices: prices(currInterval))
                     .padding()
                 HStack(alignment: .center) {
                     ForEach(intervals, id: \.self) { interval in
@@ -89,17 +89,46 @@ struct LineView: View {
         else { return false }
     }
 
-    private func prices() -> [Double] {
-        var result = [Double]()
-        if let prices = stock.dailyPrices {
-            for price in prices {
-                if let priceDescription = price as? Price {
-                    result.append(priceDescription.price)
-                }
+    private func prices(_ interval: String) -> [Double] {
+        switch interval {
+        case "1D":
+            if let prices = stock.dailyPrices {
+                return pricesForInterval(intervalPrices: prices)
+            }
+        case "1W":
+            if let prices = stock.weekPrices {
+                return pricesForInterval(intervalPrices: prices)
+            }
+        case "1M":
+            if let prices = stock.oneMPrices {
+                return pricesForInterval(intervalPrices: prices)
+            }
+        case "3M":
+            if let prices = stock.threeMPrices {
+                return pricesForInterval(intervalPrices: prices)
+            }
+        case "1Y":
+            if let prices = stock.oneYPrices {
+                return pricesForInterval(intervalPrices: prices)
+            }
+        case "5Y":
+            if let prices = stock.fiveYPrices {
+                return pricesForInterval(intervalPrices: prices)
+            }
+        default:
+            return [Double]()
+        }
+        return [Double]()
+    }
+
+    private func pricesForInterval(intervalPrices: NSOrderedSet) -> [Double] {
+        var prices = [Double]()
+        for price in intervalPrices {
+            if let price = price as? Price {
+                prices.append(price.price)
             }
         }
-        print(result)
-        return result
+        return prices
     }
 
     private func priceForInterval(_ interval: String) {
