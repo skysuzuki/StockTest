@@ -18,18 +18,10 @@ struct LineView: View {
         "3M",
         "1Y",
         "5Y"]
-    //@ObservedObject var stock: Stocks
-    var chartDataTest = [ChartDataEntry]()
-
-    //    let symbol: String
-    //    let stockName: String
-    //    let currPrice: Double
-    //    let change: Double
-    //    var pri: NSSet
 
     var stock: Stock
 
-    @ObservedObject var stockNetwork: Stocks = Stocks()
+    @Binding var stockNetwork: Stocks
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -148,6 +140,6 @@ struct LineView: View {
 
 struct LineView_Previews: PreviewProvider {
     static var previews: some View {
-        LineView(stock: Stock())
+        LineView(stock: Stock(), stockNetwork: .constant(Stocks()))
     }
 }

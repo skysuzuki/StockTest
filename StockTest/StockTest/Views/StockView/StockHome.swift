@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct StockHome: View {
-    @Environment(\.managedObjectContext) private var viewContext
+    @State var stockViewModel: StockListViewModel
 
-    @ObservedObject var stockController = StockController(context: PersistenceController.shared.container.viewContext)
+    @Binding var stocks: [Stock]
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(stockController.stocks) { stock in
+                ForEach(stocks) { stock in
                     ZStack {
                         NavigationLink(
-                            destination: LineView(stock: stock)) {
+                            destination: LineView(stock: stock, stockNetwork: $stockViewModel.stockNetwork)) {
                             StockRow(symbol: stock.symbol,
                                      stockName: stock.stockName,
                                      currPrice: Float(stock.currPrice),
@@ -34,7 +34,7 @@ struct StockHome: View {
 
 struct StockHome_Previews: PreviewProvider {
     static var previews: some View {
-        StockHome()
+        StockHome(stockViewModel: StockListViewModel(), stocks: .constant([Stock]()))
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

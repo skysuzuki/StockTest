@@ -25,7 +25,7 @@ struct ContentView: View {
 
     var body: some View {
         TabView(selection: $selection) {
-            StockHome()
+            StockHome(stockViewModel: stockModel, stocks: $stockController.stocks)
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
