@@ -25,8 +25,6 @@ struct ContentView: View {
 
     init() {
         stockModel.getStockViews()
-        //stocks.fetchStockViews()
-        //stocks.fetchStockPrice("CRSR", .intraday)
     }
 
     var body: some View {
@@ -45,14 +43,6 @@ struct ContentView: View {
         }
     }
 
-    private func addStock() {
-
-        let newStock = Stock(context: viewContext)
-        newStock.symbol = "TSLA"
-
-        saveContext()
-    }
-
 //    private func deleteItems(offsets: IndexSet) {
 //        withAnimation {
 //            offsets.map { stocks[$0] }.forEach(viewContext.delete)
@@ -67,14 +57,6 @@ struct ContentView: View {
 //            }
 //        }
 //    }
-
-    func saveContext() {
-        do {
-            try viewContext.save()
-        } catch {
-            print("Error saving managed object context: \(error)")
-        }
-    }
 }
 
 private let itemFormatter: DateFormatter = {

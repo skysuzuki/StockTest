@@ -22,12 +22,14 @@ struct Line: UIViewRepresentable {
         chart.xAxis.drawLabelsEnabled = false
         chart.xAxis.drawGridLinesEnabled = false
         chart.xAxis.drawAxisLineEnabled = false
+        chart.legend.enabled = false
         chart.leftAxis.drawLabelsEnabled = false
         chart.leftAxis.drawGridLinesEnabled = false
         chart.leftAxis.drawAxisLineEnabled = false
         chart.rightAxis.drawLabelsEnabled = false
         chart.rightAxis.drawGridLinesEnabled = false
         chart.rightAxis.drawAxisLineEnabled = false
+        chart.animate(xAxisDuration: 2.0, easingOption: .easeInBounce)
         chart.data = addData()
         return chart
     }
@@ -63,6 +65,6 @@ struct Line: UIViewRepresentable {
 
 struct Line_Previews: PreviewProvider {
     static var previews: some View {
-        Line(prices: [0.1, 22.1, 10.2] )
+        Line(prices: [0.1, 22.1, 10.2, 0.2, 2.3, 5.3, 10.3] )
     }
 }

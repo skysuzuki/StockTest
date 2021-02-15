@@ -10,10 +10,6 @@ import SwiftUI
 struct StockHome: View {
     @Environment(\.managedObjectContext) private var viewContext
 
-    @FetchRequest(entity: Stock.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Stock.symbol, ascending: true)],
-        animation: .default)
-    private var stocks: FetchedResults<Stock>
-
     @ObservedObject var stockController = StockController(context: PersistenceController.shared.container.viewContext)
 
     var body: some View {
