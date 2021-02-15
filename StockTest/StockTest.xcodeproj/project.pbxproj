@@ -34,6 +34,7 @@
 		BB5E58D025DA07CA0031FEAD /* StockSymbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E58CF25DA07CA0031FEAD /* StockSymbols.swift */; };
 		BB5E58D325DA10A40031FEAD /* SearchRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E58D225DA10A40031FEAD /* SearchRow.swift */; };
 		BB5E58D825DA48E50031FEAD /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E58D725DA48E50031FEAD /* SplashScreen.swift */; };
+		BB5E58E625DAFDC60031FEAD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB5E58E525DAFDC60031FEAD /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		BB5E58CF25DA07CA0031FEAD /* StockSymbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockSymbols.swift; sourceTree = "<group>"; };
 		BB5E58D225DA10A40031FEAD /* SearchRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRow.swift; sourceTree = "<group>"; };
 		BB5E58D725DA48E50031FEAD /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
+		BB5E58E525DAFDC60031FEAD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 				BB37A98725D514A700E5E4DC /* Assets.xcassets */,
 				BB37A98C25D514A700E5E4DC /* Persistence.swift */,
 				BB37A99125D514A700E5E4DC /* Info.plist */,
+				BB5E58E525DAFDC60031FEAD /* GoogleService-Info.plist */,
 				BB37A98E25D514A700E5E4DC /* StockTest.xcdatamodeld */,
 				BB37A98925D514A700E5E4DC /* Preview Content */,
 			);
@@ -284,6 +287,7 @@
 			files = (
 				BB37A98B25D514A700E5E4DC /* Preview Assets.xcassets in Resources */,
 				BB37A98825D514A700E5E4DC /* Assets.xcassets in Resources */,
+				BB5E58E625DAFDC60031FEAD /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

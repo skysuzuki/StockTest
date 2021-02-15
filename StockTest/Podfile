@@ -6,5 +6,6 @@ target 'StockTest' do
   use_frameworks!
 
   # Pods for StockTest
- pod 'Charts'
+  pod 'Charts'
+  pod 'Firebase/Analytics'
 end
