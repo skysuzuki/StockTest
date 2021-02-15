@@ -21,21 +21,19 @@ struct SearchHome: View {
                 SearchBar(text: $searchText, stock: stock)
                 List {
                     ForEach(stockResults, id: \.self) { stock in
-                        HStack{
-                            Text(stock.symbol)
-                            Spacer()
-                            Text(stock.name)
-                        }
+                        SearchRow(symbol: stock.symbol, stockName: stock.name)
                     }
                 }
+                .listStyle(InsetListStyle())
+
             }
-            .navigationBarTitle(Text("Search Stocks"))
+            .navigationTitle("Search Stocks")
         }
     }
 }
 
 struct SearchHome_Previews: PreviewProvider {
     static var previews: some View {
-        SearchHome(stockResults: .constant([StockSearch(symbol: "TSLA", name: "TESLA")]), stock: Stocks("TSLA"))
+        SearchHome(stockResults: .constant([StockSearch(symbol: "TSLA", name: "TESLA")]), stock: Stocks())
     }
 }

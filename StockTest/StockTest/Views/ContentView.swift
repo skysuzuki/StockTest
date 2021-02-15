@@ -20,12 +20,8 @@ struct ContentView: View {
         case search
     }
 
+    @ObservedObject var stockController = StockController(context: PersistenceController.shared.container.viewContext)
     @ObservedObject var stockModel = StockListViewModel()
-    @ObservedObject var tempStock = Stocks("CRSR")
-
-    init() {
-        stockModel.getStockViews()
-    }
 
     var body: some View {
         TabView(selection: $selection) {
@@ -34,12 +30,15 @@ struct ContentView: View {
                     Label("Home", systemImage: "house")
                 }
                 .tag(Tab.home)
-            SearchHome(stockResults: $tempStock.searchResults,
-                       stock: tempStock)
+            SearchHome(stockResults: $stockModel.stockNetwork.searchResults,
+                       stock: stockModel.stockNetwork)
                 .tabItem {
                     Label("Search", systemImage: "magnifyingglass")
                 }
                 .tag(Tab.search)
+        }
+        .onAppear {
+            stockModel.getStockViews()
         }
     }
 

@@ -28,12 +28,8 @@ class Stocks: ObservableObject, Identifiable {
     //https://www.alphavantage.co/query?function=TIME_SERIES_DILY&symbol=TESLA&"
     var cancellable: Set<AnyCancellable> = Set()
     var stockViewDispatchGroup = DispatchGroup()
-    var id: String
     private var apikey = "00HW87JZWQ30BPUN"
 
-    init(_ id: String) {
-        self.id = id
-    }
 
     func searchStocks(_ search: String) {
         var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
@@ -64,12 +60,12 @@ class Stocks: ObservableObject, Identifiable {
 
     }
 
-    func fetchStockView() {
+    func fetchStockView(_ symbol: String) {
 
         var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
         urlComponents?.queryItems = [
             URLQueryItem(name: "function", value: "GLOBAL_QUOTE"),
-            URLQueryItem(name: "symbol", value: self.id),
+            URLQueryItem(name: "symbol", value: symbol),
             URLQueryItem(name: "apikey", value: apikey)
         ]
 
@@ -87,7 +83,7 @@ class Stocks: ObservableObject, Identifiable {
                 case .failure(let error):
                     print("Handle \(error)")
                 case .finished:
-                    print("completed \(self.id)")
+                    print("completed \(symbol)")
                     break
                 }
             }) { value in

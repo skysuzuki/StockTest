@@ -14,17 +14,12 @@ class StockListViewModel: ObservableObject {
     private let moc = PersistenceController.shared.container.viewContext
     let defaults = UserDefaults.standard
 
-    @Published var stocks = [Stocks]()
+    @Published var stockNetwork = Stocks()
     @Published var stockViews = [StockView]()
 
     init() {
-        stocks.append(Stocks("CRSR"))
-        stocks.append(Stocks("AAPL"))
-        stocks.append(Stocks("BCRX"))
-        stocks.append(Stocks("TSLA"))
-        stocks.append(Stocks("ELY"))
-        stocks.append(Stocks("GME"))
-
+        // This happens only once on load of APP, loads in the default stocks
+        // Sets the user default for is loaded to true after so that it doesn't load again
         let isStocksLoaded = UserDefaults.standard.bool(forKey: "isStocksLoaded")
         if (!isStocksLoaded) {
             addStock(symbol: "CRSR", stockName: "Corsair")
@@ -55,9 +50,8 @@ class StockListViewModel: ObservableObject {
     }
 
     func getStockViews() {
-        for stock in stocks {
-            stock.fetchStockView()
+        for symbol in StockSymbol.allCases {
+            stockNetwork.fetchStockView(symbol.rawValue)
         }
-
     }
 }

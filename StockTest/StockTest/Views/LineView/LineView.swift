@@ -29,7 +29,7 @@ struct LineView: View {
 
     var stock: Stock
 
-    @ObservedObject var stockNetwork: Stocks = Stocks("CRSR")
+    @ObservedObject var stockNetwork: Stocks = Stocks()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
