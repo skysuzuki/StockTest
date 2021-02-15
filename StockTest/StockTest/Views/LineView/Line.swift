@@ -29,7 +29,10 @@ struct Line: UIViewRepresentable {
         chart.rightAxis.drawLabelsEnabled = false
         chart.rightAxis.drawGridLinesEnabled = false
         chart.rightAxis.drawAxisLineEnabled = false
-        chart.animate(xAxisDuration: 2.0, easingOption: .easeInBounce)
+        chart.animate(xAxisDuration: 2.0)
+        chart.fitScreen()
+        
+
         chart.data = addData()
         return chart
     }

@@ -33,6 +33,7 @@
 		BB5E58CC25D9D8F80031FEAD /* Stock+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E58C825D9D8F80031FEAD /* Stock+CoreDataProperties.swift */; };
 		BB5E58D025DA07CA0031FEAD /* StockSymbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E58CF25DA07CA0031FEAD /* StockSymbols.swift */; };
 		BB5E58D325DA10A40031FEAD /* SearchRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E58D225DA10A40031FEAD /* SearchRow.swift */; };
+		BB5E58D825DA48E50031FEAD /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E58D725DA48E50031FEAD /* SplashScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		BB5E58C825D9D8F80031FEAD /* Stock+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stock+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		BB5E58CF25DA07CA0031FEAD /* StockSymbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockSymbols.swift; sourceTree = "<group>"; };
 		BB5E58D225DA10A40031FEAD /* SearchRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRow.swift; sourceTree = "<group>"; };
+		BB5E58D725DA48E50031FEAD /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				BB37A99C25D5AA8300E5E4DC /* Model */,
 				BB37A9A425D5AFD400E5E4DC /* Networking */,
 				BB37A98325D514A300E5E4DC /* StockTestApp.swift */,
+				BB5E58D725DA48E50031FEAD /* SplashScreen.swift */,
 				BB37A98725D514A700E5E4DC /* Assets.xcassets */,
 				BB37A98C25D514A700E5E4DC /* Persistence.swift */,
 				BB37A99125D514A700E5E4DC /* Info.plist */,
@@ -333,6 +336,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB5E58D825DA48E50031FEAD /* SplashScreen.swift in Sources */,
 				BB5E58CB25D9D8F80031FEAD /* Stock+CoreDataClass.swift in Sources */,
 				BB5E58C925D9D8F80031FEAD /* Price+CoreDataClass.swift in Sources */,
 				BB37A99E25D5AB5A00E5E4DC /* String+Extension.swift in Sources */,
