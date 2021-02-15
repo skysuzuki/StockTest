@@ -15,7 +15,6 @@ class StockListViewModel: ObservableObject {
     let defaults = UserDefaults.standard
 
     @Published var stockNetwork = Stocks()
-    @Published var stockViews = [StockView]()
 
     init() {
         // This happens only once on load of APP, loads in the default stocks

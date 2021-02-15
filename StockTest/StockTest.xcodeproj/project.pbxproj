@@ -24,7 +24,6 @@
 		BB5E585425D639F50031FEAD /* StockHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E585325D639F50031FEAD /* StockHome.swift */; };
 		BB5E585B25D729670031FEAD /* SearchHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E585A25D729670031FEAD /* SearchHome.swift */; };
 		BB5E586425D735C10031FEAD /* StockListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E586325D735C10031FEAD /* StockListViewModel.swift */; };
-		BB5E586725D737240031FEAD /* StockListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E586625D737240031FEAD /* StockListItem.swift */; };
 		BB5E586A25D75FF80031FEAD /* StockSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E586925D75FF80031FEAD /* StockSearch.swift */; };
 		BB5E587025D770450031FEAD /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E586F25D770450031FEAD /* SearchBar.swift */; };
 		BB5E58C225D90E630031FEAD /* StockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E58C125D90E630031FEAD /* StockController.swift */; };
@@ -58,7 +57,6 @@
 		BB5E585325D639F50031FEAD /* StockHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHome.swift; sourceTree = "<group>"; };
 		BB5E585A25D729670031FEAD /* SearchHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHome.swift; sourceTree = "<group>"; };
 		BB5E586325D735C10031FEAD /* StockListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockListViewModel.swift; sourceTree = "<group>"; };
-		BB5E586625D737240031FEAD /* StockListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockListItem.swift; sourceTree = "<group>"; };
 		BB5E586925D75FF80031FEAD /* StockSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockSearch.swift; sourceTree = "<group>"; };
 		BB5E586F25D770450031FEAD /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		BB5E58C125D90E630031FEAD /* StockController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockController.swift; sourceTree = "<group>"; };
@@ -141,7 +139,6 @@
 				BB37A99925D5A89100E5E4DC /* StockPrice.swift */,
 				BB37A9C225D5D60F00E5E4DC /* StockView.swift */,
 				BB5E586325D735C10031FEAD /* StockListViewModel.swift */,
-				BB5E586625D737240031FEAD /* StockListItem.swift */,
 				BB5E586925D75FF80031FEAD /* StockSearch.swift */,
 				BB5E58C125D90E630031FEAD /* StockController.swift */,
 			);
@@ -356,7 +353,6 @@
 				BB37A99025D514A700E5E4DC /* StockTest.xcdatamodeld in Sources */,
 				BB37A98425D514A300E5E4DC /* StockTestApp.swift in Sources */,
 				BB37A9C325D5D60F00E5E4DC /* StockView.swift in Sources */,
-				BB5E586725D737240031FEAD /* StockListItem.swift in Sources */,
 				BB5E587025D770450031FEAD /* SearchBar.swift in Sources */,
 				BB5E58CA25D9D8F80031FEAD /* Price+CoreDataProperties.swift in Sources */,
 				BB5E586425D735C10031FEAD /* StockListViewModel.swift in Sources */,
