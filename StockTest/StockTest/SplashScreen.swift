@@ -11,7 +11,7 @@ import SwiftUI
 struct SplashScreen: View {
     static var shouldAnimate = true
 
-    let backgroundColor = Color("LaunchScreenBackground")
+    let backgroundColor = Color("launchScreenBackground")
     @State var textAlpha = 0.0
     @State var textScale: CGFloat = 1
     @State var percent = 0.0

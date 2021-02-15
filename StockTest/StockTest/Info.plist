@@ -29,12 +29,8 @@
 	<true/>
 	<key>UILaunchScreen</key>
 	<dict>
-		<key>UIImageName</key>
-		<string>StocksImage</string>
 		<key>UIColorName</key>
-		<string>LaunchScreenBackground</string>
-		<key>UIImageRespectsSafeAreaInsets</key>
-		<false/>
+		<string>launchScreenBackground</string>
 	</dict>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
