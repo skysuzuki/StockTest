@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUICharts
 
 struct StockHome: View {
     @State var stockViewModel: StockListViewModel
@@ -18,7 +19,9 @@ struct StockHome: View {
                 ForEach(stocks) { stock in
                     ZStack {
                         NavigationLink(
-                            destination: LineView(stock: stock, stockNetwork: $stockViewModel.stockNetwork)) {
+                            destination:
+                                LineView(stock: stock, stockViewModel: stockViewModel, stockNetwork: $stockViewModel.stockNetwork, pointPrices: stockViewModel.stockNetwork.pointPrices, finishedFetching: $stockViewModel.stockNetwork.finishedFetching)
+                        ) {
                             StockRow(symbol: stock.symbol,
                                      stockName: stock.stockName,
                                      currPrice: Float(stock.currPrice),

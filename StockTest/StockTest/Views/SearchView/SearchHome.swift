@@ -10,8 +10,8 @@ import SwiftUI
 struct SearchHome: View {
 
     @State private var searchText: String = ""
-    //let stock: Stocks
-    @Binding var stockResults: [StockSearch]
+
+    @Binding var stockResults: [StockSearchResult]
 
     let stock: Stocks
 
@@ -34,6 +34,6 @@ struct SearchHome: View {
 
 struct SearchHome_Previews: PreviewProvider {
     static var previews: some View {
-        SearchHome(stockResults: .constant([StockSearch(symbol: "TSLA", name: "TESLA")]), stock: Stocks())
+        SearchHome(stockResults: .constant([StockSearchResult(symbol: "TSLA", name: "TESLA")]), stock: Stocks())
     }
 }

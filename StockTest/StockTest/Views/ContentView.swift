@@ -24,6 +24,7 @@ struct ContentView: View {
     @ObservedObject var stockController = StockController(context: PersistenceController.shared.container.viewContext)
     @ObservedObject var stockModel = StockListViewModel()
 
+
     var body: some View {
         ZStack {
             TabView(selection: $selection) {

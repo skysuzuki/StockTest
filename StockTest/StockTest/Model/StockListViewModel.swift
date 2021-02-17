@@ -8,13 +8,23 @@
 import Foundation
 import Combine
 import SwiftUI
+import CoreData
+import Charts
 
 class StockListViewModel: ObservableObject {
+    enum State {
+        case idle
+        case loading
+        case failed(Error)
+        case loaded([ChartDataEntry])
+    }
 
     private let moc = PersistenceController.shared.container.viewContext
+    
     let defaults = UserDefaults.standard
 
     @Published var stockNetwork = Stocks()
+    @Published private(set) var state = State.idle
 
     init() {
         // This happens only once on load of APP, loads in the default stocks
@@ -50,7 +60,47 @@ class StockListViewModel: ObservableObject {
 
     func getStockViews() {
         for symbol in StockSymbol.allCases {
-            stockNetwork.fetchStockView(symbol.rawValue)
+            stockNetwork.getStockViews(symbol.rawValue)
         }
+    }
+
+    func getTestStockPrices(_ symbol: String, interval: String) {
+        stockNetwork.fetchStockPrice(symbol)
+    }
+
+    func loadStockPrices() {
+        stockNetwork.testLoadPrices(withSymbol: "CRSR") { [weak self] result in
+            switch result {
+            case .success(let chartData):
+                DispatchQueue.main.async {
+                    self?.state = .loaded(chartData)
+                }
+            case .failure(let error):
+                self?.state = .failed(error)
+            }
+        }
+
+    }
+
+    func getStockPrices(_ symbol: String, interval: String) -> [ChartDataEntry] {
+        var chartData = [ChartDataEntry]()
+        let pricesFetch: NSFetchRequest<Price> = Price.fetchRequest()
+        pricesFetch.predicate = NSPredicate(format: "%K == %@", "\(interval).symbol", symbol)
+        let context =  PersistenceController.shared.container.viewContext
+        context.performAndWait {
+            do {
+                //let stocks = try context.fetch(stockFetch)
+                let prices = try context.fetch(pricesFetch)
+                var index: Double = 0
+                for price in prices {
+                    chartData.append(ChartDataEntry(x: index, y: price.price))
+                    index += 1
+                }
+
+            } catch {
+                print("Error ")
+            }
+        }
+        return chartData
     }
 }

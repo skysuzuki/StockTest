@@ -29,7 +29,7 @@ struct SearchBar: UIViewRepresentable {
 
         func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
             text = searchText
-            self.stock.searchStocks(text)
+            self.stock.searchStocks(searchText)
         }
     }
 

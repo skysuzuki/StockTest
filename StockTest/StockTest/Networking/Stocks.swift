@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 import CoreData
+import Charts
 
 enum stockFunction: String {
     case intraday = "TIME_SERIES_INTRADAY"
@@ -21,17 +22,93 @@ class Stocks: ObservableObject, Identifiable {
 
     @Published var stockView: StockView?
     @Published var prices = [Double]()
+    @Published var pointPrices = [CGPoint]()
+    @Published var finishedFetching = false
+    @Published private(set) var state = false
     @Published var currentPrice = "...."
-    @Published var searchResults = [StockSearch]()
-    var urlBase = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=00HW87JZWQ30BPUN"
+    @Published var searchResults = [StockSearchResult]()
+
     var baseURL = URL(string: "https://www.alphavantage.co/query?")!
-    //https://www.alphavantage.co/query?function=TIME_SERIES_DILY&symbol=TESLA&"
+
     var cancellable: Set<AnyCancellable> = Set()
     var stockViewDispatchGroup = DispatchGroup()
-    private var apikey = "00HW87JZWQ30BPUN"
+    private var apikey = "C0A7LMCK12GYH6UZ"
+    //private var apikey = "00HW87JZWQ30BPUN"
 
+    struct Response<T> {
+        let value: T
+        let response: URLResponse
+    }
+
+    func testLoadPrices(withSymbol: String, completion: @escaping (Result<[ChartDataEntry], Error>) -> Void) {
+
+        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+        urlComponents?.queryItems = [
+            URLQueryItem(name: "function", value: stockFunction.intraday.rawValue),
+            URLQueryItem(name: "symbol", value: withSymbol),
+            URLQueryItem(name: "interval", value: "5min"),
+            URLQueryItem(name: "apikey", value: apikey)
+        ]
+
+        guard let requestURL = urlComponents?.url else {
+            print("Request URL is nil")
+            completion(.failure(NSError()))
+            return
+        }
+
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = "GET"
+
+        URLSession.shared.dataTask(with: request) { data, _, error in
+            if let error = error {
+                print("Error fetching data: \(error)")
+                completion(.failure(error))
+                return
+            }
+
+            guard let data = data else {
+                completion(.failure(NSError()))
+                return
+            }
+
+            let jsonDecoder = JSONDecoder()
+            do {
+                let value = try jsonDecoder.decode(StocksMinute.self, from: data)
+                var stockPrices = [Double]()
+                var chartData = [ChartDataEntry]()
+
+                let orderedDates = value.timeSeriesMinute?.sorted {
+                    guard let d1 = $0.key.stringDateMinute, let d2 = $1.key.stringDateMinute else { return false }
+                    return d1 < d2
+                }
+
+                guard let stockData = orderedDates else { return }
+
+                self.removePrices(symbol: withSymbol, interval: nil)
+
+                var index: Double = 0
+                for(_, stock) in stockData {
+                    if let stock = Double(stock.close) {
+                        if stock > 0.0 {
+                            stockPrices.append(stock)
+
+                            chartData.append(ChartDataEntry(x: index, y: stock))
+                            index += 1
+
+                            self.addPrice(with: stock, symbol: withSymbol, interval: nil)
+                        }
+                    }
+                }
+                completion(.success(chartData))
+            } catch {
+                completion(.failure(error))
+            }
+        }.resume()
+
+    }
 
     func searchStocks(_ search: String) {
+
         var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
         urlComponents?.queryItems = [
             URLQueryItem(name: "function", value: "SYMBOL_SEARCH"),
@@ -39,25 +116,75 @@ class Stocks: ObservableObject, Identifiable {
             URLQueryItem(name: "apikey", value: apikey)
         ]
 
-        guard let requestURL = urlComponents?.url else { return }
-
+        guard let url = urlComponents?.url else { return }
+        var requestURL = URLRequest(url: url)
+        requestURL.httpMethod = "GET"
         URLSession.shared.dataTaskPublisher(for: requestURL)
             .map { output in
                 return output.data
             }
-            .decode(type: [String: [StockSearch]].self, decoder: JSONDecoder())
+            .decode(type: StockSearch.self, decoder: JSONDecoder())
             .sink(receiveCompletion: { _ in
                 print("completed search")
             }, receiveValue: { value in
 
-                guard let searchData = value["bestMatches"] else { return }
                 DispatchQueue.main.async {
-                    self.searchResults = searchData
+                    self.searchResults = value.bestMatches
                 }
             })
             .store(in: &cancellable)
 
 
+    }
+
+
+    func networkRun<T: Decodable>(_ request: URLRequest) -> AnyPublisher<Response<T>, Error> {
+        return URLSession.shared
+            .dataTaskPublisher(for: request)
+            .tryMap { result -> Response<T> in
+
+                let decodedValue = try JSONDecoder().decode([String : T].self, from: result.data)
+                let value = decodedValue["Global Quote"]!
+                return Response(value: value, response: result.response)
+            }
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+
+    func request(_ symbol: String) -> AnyPublisher<StockView, Error> {
+
+        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+        urlComponents?.queryItems = [
+            URLQueryItem(name: "function", value: "GLOBAL_QUOTE"),
+            URLQueryItem(name: "symbol", value: symbol),
+            URLQueryItem(name: "apikey", value: apikey)
+        ]
+
+        guard let url = urlComponents?.url else { fatalError("Not valid URL") }
+        var requestURL = URLRequest(url: url)
+        requestURL.httpMethod = "GET"
+
+        return networkRun(requestURL)
+            .map(\.value)
+            .eraseToAnyPublisher()
+    }
+
+    func getStockViews(_ symbol: String) {
+        let cancel = request(symbol)
+            .mapError({ (error) -> Error in
+                print(error)
+                return error
+            })
+            .sink(receiveCompletion: { _ in },
+            receiveValue: {
+                self.stockView = $0
+                do {
+                    try self.updateStockViews(with: $0)
+                } catch {
+                    print("Error updating")
+                }
+            })
+        cancellable.insert(cancel)
     }
 
     func fetchStockView(_ symbol: String) {
@@ -270,6 +397,7 @@ class Stocks: ObservableObject, Identifiable {
             }) { value in
 
                 var stockPrices = [Double]()
+                var pointData = [CGPoint]()
 
                 let orderedDates = value.timeSeriesMinute?.sorted {
                     guard let d1 = $0.key.stringDateMinute, let d2 = $1.key.stringDateMinute else { return false }
@@ -280,11 +408,15 @@ class Stocks: ObservableObject, Identifiable {
 
                 self.removePrices(symbol: symbol, interval: nil)
 
+                var index: Double = 1
                 for(_, stock) in stockData {
                     if let stock = Double(stock.close) {
                         if stock > 0.0 {
                             stockPrices.append(stock)
 
+                            pointData.append(CGPoint(x: index, y: stock))
+                            index += 1
+                            
                             self.addPrice(with: stock, symbol: symbol, interval: nil)
                         }
                     }
@@ -292,12 +424,15 @@ class Stocks: ObservableObject, Identifiable {
 
                 DispatchQueue.main.async {
                     self.prices = stockPrices
+                    self.pointPrices = pointData
+                    self.state = true
+                    self.finishedFetching = true
+                    print("fetch:\(stockPrices)")
                     self.currentPrice = stockData.last?.value.close ?? ""
                 }
             }
             .store(in: &cancellable)
     }
-
 
     // Function call to fetch data for 1 month and 3 months
     func fetchStockPriceMonthly(_ symbol: String,_ interval: String) {

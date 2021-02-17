@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct StockSearch: Codable, Hashable {
+struct StockSearchResult: Codable, Hashable {
     let symbol: String
     let name: String
 
@@ -15,4 +15,8 @@ struct StockSearch: Codable, Hashable {
         case symbol = "1. symbol"
         case name = "2. name"
     }
+}
+
+struct StockSearch: Codable {
+    let bestMatches: [StockSearchResult]
 }
