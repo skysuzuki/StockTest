@@ -58,6 +58,7 @@ struct Line: UIViewRepresentable {
         //when data changes chartd.data update is required
 
         uiView.data = addData()
+        uiView.animate(xAxisDuration: 2.0)
         //uiView.data = chartData
         //uiView.notifyDataSetChanged()
     }

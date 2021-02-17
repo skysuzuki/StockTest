@@ -64,12 +64,8 @@ class StockListViewModel: ObservableObject {
         }
     }
 
-    func getTestStockPrices(_ symbol: String, interval: String) {
-        stockNetwork.fetchStockPrice(symbol)
-    }
-
-    func loadStockPrices() {
-        stockNetwork.testLoadPrices(withSymbol: "CRSR") { [weak self] result in
+    func loadStockPrices(symbol: String) {
+        stockNetwork.loadDailyPrices(withSymbol: symbol) { [weak self] result in
             switch result {
             case .success(let chartData):
                 DispatchQueue.main.async {
@@ -79,7 +75,45 @@ class StockListViewModel: ObservableObject {
                 self?.state = .failed(error)
             }
         }
+    }
 
+    func loadStockWeeklyPrices(symbol: String) {
+        stockNetwork.loadWeeklyPrices(withSymbol: symbol) { [weak self] result in
+            switch result {
+            case .success(let chartData):
+                DispatchQueue.main.async {
+                    self?.state = .loaded(chartData)
+                }
+            case .failure(let error):
+                self?.state = .failed(error)
+            }
+        }
+    }
+
+    func loadMonthlyStockPrices(symbol: String, interval: String) {
+        stockNetwork.loadMonthlyPrices(withSymbol: symbol, withInterval: interval) { [weak self] result in
+            switch result {
+            case .success(let chartData):
+                DispatchQueue.main.async {
+                    self?.state = .loaded(chartData)
+                }
+            case .failure(let error):
+                self?.state = .failed(error)
+            }
+        }
+    }
+
+    func loadYearlyStockPrices(symbol: String, interval: String) {
+        stockNetwork.loadYearlyPrices(withSymbol: symbol, withInterval: interval) { [weak self] result in
+            switch result {
+            case .success(let chartData):
+                DispatchQueue.main.async {
+                    self?.state = .loaded(chartData)
+                }
+            case .failure(let error):
+                self?.state = .failed(error)
+            }
+        }
     }
 
     func getStockPrices(_ symbol: String, interval: String) -> [ChartDataEntry] {

@@ -69,7 +69,8 @@ struct LineView: View {
                     // Render a clear color and start the loading process
                     // when the view first appears, which should make the
                     // view model transition into its loading state:
-                    Color.clear.onAppear(perform: stockViewModel.loadStockPrices)
+                    Color.clear.onAppear {
+                        stockViewModel.loadStockPrices(symbol: stock.symbol) }
                 case .loading:
                     ProgressView()
                 case .failed(let _):
@@ -115,7 +116,7 @@ struct LineView: View {
             }
         }
         .onAppear() {
-            self.stockNetwork.fetchStockPrice(stock.symbol)
+            //self.stockNetwork.fetchStockPrice(stock.symbol)
         }
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -193,13 +194,13 @@ struct LineView: View {
         currInterval = interval
         switch interval {
         case "1W":
-            self.stockNetwork.fetchStockPrice(stock.symbol)
+            self.stockViewModel.loadStockWeeklyPrices(symbol: stock.symbol)
         case "1M", "3M":
-            self.stockNetwork.fetchStockPriceMonthly(stock.symbol, interval)
+            self.stockViewModel.loadMonthlyStockPrices(symbol: stock.symbol, interval: interval)
         case "1Y", "5Y":
-            self.stockNetwork.fetchStockPriceYearly(stock.symbol, interval)
+            self.stockViewModel.loadYearlyStockPrices(symbol: stock.symbol, interval: interval)
         default:
-            return
+            self.stockViewModel.loadStockPrices(symbol: stock.symbol)
         }
     }
 }
