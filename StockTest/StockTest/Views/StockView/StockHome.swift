@@ -20,7 +20,7 @@ struct StockHome: View {
                     ZStack {
                         NavigationLink(
                             destination:
-                                LineView(stock: stock, stockViewModel: stockViewModel, stockNetwork: $stockViewModel.stockNetwork, pointPrices: stockViewModel.stockNetwork.pointPrices, finishedFetching: $stockViewModel.stockNetwork.finishedFetching)
+                                LineView(stock: stock, stockViewModel: stockViewModel)
                         ) {
                             StockRow(symbol: stock.symbol,
                                      stockName: stock.stockName,
