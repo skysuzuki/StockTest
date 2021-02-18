@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		639877C9EB39827B7E8B5689 /* Pods_StockTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39FDEF4586AA58B83D0FDACD /* Pods_StockTest.framework */; };
-		BB20AF5325DD8E9D00D8F179 /* AsyncContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB20AF5225DD8E9D00D8F179 /* AsyncContentView.swift */; };
 		BB37A98425D514A300E5E4DC /* StockTestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB37A98325D514A300E5E4DC /* StockTestApp.swift */; };
 		BB37A98625D514A300E5E4DC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB37A98525D514A300E5E4DC /* ContentView.swift */; };
 		BB37A98825D514A700E5E4DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB37A98725D514A700E5E4DC /* Assets.xcassets */; };
@@ -42,7 +41,6 @@
 		39FDEF4586AA58B83D0FDACD /* Pods_StockTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StockTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4716E295BE471AAF357209A8 /* Pods-StockTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockTest.release.xcconfig"; path = "Target Support Files/Pods-StockTest/Pods-StockTest.release.xcconfig"; sourceTree = "<group>"; };
 		76A35AC5ADE0E81B36EF0606 /* Pods-StockTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockTest.debug.xcconfig"; path = "Target Support Files/Pods-StockTest/Pods-StockTest.debug.xcconfig"; sourceTree = "<group>"; };
-		BB20AF5225DD8E9D00D8F179 /* AsyncContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncContentView.swift; sourceTree = "<group>"; };
 		BB37A98025D514A300E5E4DC /* StockTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StockTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB37A98325D514A300E5E4DC /* StockTestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockTestApp.swift; sourceTree = "<group>"; };
 		BB37A98525D514A300E5E4DC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -186,7 +184,6 @@
 			children = (
 				BB5E584B25D6233B0031FEAD /* LineView.swift */,
 				BB5E585025D626FF0031FEAD /* Line.swift */,
-				BB20AF5225DD8E9D00D8F179 /* AsyncContentView.swift */,
 			);
 			path = LineView;
 			sourceTree = "<group>";
@@ -352,7 +349,6 @@
 				BB5E58C925D9D8F80031FEAD /* Price+CoreDataClass.swift in Sources */,
 				BB37A99E25D5AB5A00E5E4DC /* String+Extension.swift in Sources */,
 				BB37A98D25D514A700E5E4DC /* Persistence.swift in Sources */,
-				BB20AF5325DD8E9D00D8F179 /* AsyncContentView.swift in Sources */,
 				BB5E585B25D729670031FEAD /* SearchHome.swift in Sources */,
 				BB5E585425D639F50031FEAD /* StockHome.swift in Sources */,
 				BB5E584C25D6233B0031FEAD /* LineView.swift in Sources */,

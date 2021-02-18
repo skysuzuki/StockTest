@@ -14,8 +14,6 @@ struct StockRow: View {
     let currPrice: Float
     let change: Double
 
-    //var stock: Stock
-
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
