@@ -15,7 +15,8 @@ struct SearchRow: View {
         HStack {
             Text(symbol)
                 .font(.custom("Arial", size: 20))
-                .foregroundColor(Color.black)
+                .bold()
+                .background(Color(UIColor.systemBackground))
             Spacer()
             Text(stockName)
                 .font(.custom("Arial", size: 18))

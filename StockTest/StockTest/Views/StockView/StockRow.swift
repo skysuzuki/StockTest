@@ -20,7 +20,8 @@ struct StockRow: View {
                 Text(symbol)
                     .font(.custom("Arial", size: 22))
                     .fontWeight(.bold)
-                    .foregroundColor(Color.black)
+                    .background(Color(UIColor.systemBackground))
+                    //.foregroundColor()
                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
                 Text(stockName)
                     .font(.custom("Arial", size: 18))
@@ -41,7 +42,12 @@ struct StockRow: View {
 
 struct StockRow_Previews: PreviewProvider {
     static var previews: some View {
-        StockRow(symbol: "CRSR", stockName: "Corsair", currPrice: 0.5, change: 0.5)
+        Group {
+            StockRow(symbol: "CRSR", stockName: "Corsair", currPrice: 0.5, change: 0.5)
+                .preferredColorScheme(.light)
+            StockRow(symbol: "CRSR", stockName: "Corsair", currPrice: 0.5, change: 0.5)
+                .preferredColorScheme(.dark)
+        }
                     
     }
 }
