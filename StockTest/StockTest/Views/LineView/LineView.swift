@@ -20,27 +20,31 @@ struct LineView: View {
         "1Y",
         "5Y"]
 
-    @State var stock: Stock
+    //var stock: Stock
+    var stockView: StockView
+    var stockName: String
 
     @ObservedObject var stockViewModel: StockListViewModel
+    
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Group {
-                Text(stock.symbol)
+                Text(stockView.symbol)
                     .font(.caption)
-                Text(stock.stockName)
+                Text(stockName)
                     .font(.title)
                     .bold()
-                Text(String(format: "%.2f", stock.currPrice))
+                //Text(String(format: "%.2f", stock.currPrice))
+                Text(stockView.price)
                     .font(.subheadline)
                     .offset(x: 5, y: 0)
                 HStack {
                     let changeColor = isPositiveChange() ? Color.green : Color.red
                     Image(systemName: isPositiveChange() ? "arrowtriangle.up.fill" : "arrowtriangle.down.fill")
                         .foregroundColor(changeColor)
-                    let changeString = String(format: "%.2f", stock.change)
-                    Text(changeString)
+                    //let changeString = String(format: "%.2f", stock.change)
+                    Text(stockView.change)
                         .font(.footnote)
                         .foregroundColor(changeColor)
                 }
@@ -53,9 +57,11 @@ struct LineView: View {
                     // when the view first appears, which should make the
                     // view model transition into its loading state:
                     Color.clear.onAppear {
-                        stockViewModel.loadStockPrices(symbol: stock.symbol) }
+                        //stockViewModel.loadStockPrices(symbol: stock.symbol)
+                    }
                 case .loading:
                     ProgressView()
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, maxHeight: .infinity)
                 case .failed(let _):
                     EmptyView()
                 case .loaded(let points):
@@ -84,33 +90,42 @@ struct LineView: View {
             }
         }
         .onAppear() {
-            //self.stockNetwork.fetchStockPrice(stock.symbol)
+            stockViewModel.loadStockPrices(symbol: stockView.symbol)
         }
         .navigationBarTitleDisplayMode(.inline)
     }
 
     private func isPositiveChange() -> Bool {
-        if stock.change > 0 { return true }
-        else { return false }
+        if let change = Double(stockView.change) {
+            if change > 0 { return true }
+        }
+        return false
     }
 
     private func priceForInterval(_ interval: String) {
         currInterval = interval
         switch interval {
         case "1W":
-            self.stockViewModel.loadStockWeeklyPrices(symbol: stock.symbol)
+            self.stockViewModel.loadStockWeeklyPrices(symbol: stockView.symbol)
         case "1M", "3M":
-            self.stockViewModel.loadMonthlyStockPrices(symbol: stock.symbol, interval: interval)
+            self.stockViewModel.loadMonthlyStockPrices(symbol: stockView.symbol, interval: interval)
         case "1Y", "5Y":
-            self.stockViewModel.loadYearlyStockPrices(symbol: stock.symbol, interval: interval)
+            self.stockViewModel.loadYearlyStockPrices(symbol: stockView.symbol, interval: interval)
         default:
-            self.stockViewModel.loadStockPrices(symbol: stock.symbol)
+            self.stockViewModel.loadStockPrices(symbol: stockView.symbol)
         }
     }
 }
 
 struct LineView_Previews: PreviewProvider {
     static var previews: some View {
-        LineView(stock: Stock(), stockViewModel: StockListViewModel())
+        LineView(
+            stockView: StockView(
+                symbol: "",
+                price: "",
+                change: "",
+                changePercent: ""),
+            stockName: "Corsair",
+            stockViewModel: StockListViewModel())
     }
 }

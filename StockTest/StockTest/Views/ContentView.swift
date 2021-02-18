@@ -22,7 +22,7 @@ struct ContentView: View {
     }
 
     @ObservedObject var stockController = StockController(context: PersistenceController.shared.container.viewContext)
-    @ObservedObject var stockModel = StockListViewModel()
+    @StateObject var stockModel = StockListViewModel()
 
 
     var body: some View {
@@ -33,7 +33,7 @@ struct ContentView: View {
                         Label("Home", systemImage: "house")
                     }
                     .tag(Tab.home)
-                SearchHome(stockNetwork: stockModel.stockNetwork, stockResults: stockModel.stockNetwork.searchResults)
+                SearchHome(stockNetwork: stockModel.stockNetwork) 
                     .tabItem {
                         Label("Search", systemImage: "magnifyingglass")
                     }

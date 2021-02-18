@@ -36,6 +36,7 @@
 		BB5E58D325DA10A40031FEAD /* SearchRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E58D225DA10A40031FEAD /* SearchRow.swift */; };
 		BB5E58D825DA48E50031FEAD /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5E58D725DA48E50031FEAD /* SplashScreen.swift */; };
 		BB5E58E625DAFDC60031FEAD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB5E58E525DAFDC60031FEAD /* GoogleService-Info.plist */; };
+		BB8B376B25DF1B390005CAB8 /* Stock+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB8B376A25DF1B390005CAB8 /* Stock+Convenience.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,7 @@
 		BB5E58D225DA10A40031FEAD /* SearchRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRow.swift; sourceTree = "<group>"; };
 		BB5E58D725DA48E50031FEAD /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		BB5E58E525DAFDC60031FEAD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BB8B376A25DF1B390005CAB8 /* Stock+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Stock+Convenience.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +161,7 @@
 				BB37A99D25D5AB5A00E5E4DC /* String+Extension.swift */,
 				BB5E58CF25DA07CA0031FEAD /* StockSymbols.swift */,
 				BB07F50225DE378F000219D5 /* UIApplication+Extension.swift */,
+				BB8B376A25DF1B390005CAB8 /* Stock+Convenience.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB8B376B25DF1B390005CAB8 /* Stock+Convenience.swift in Sources */,
 				BB5E58D825DA48E50031FEAD /* SplashScreen.swift in Sources */,
 				BB5E58CB25D9D8F80031FEAD /* Stock+CoreDataClass.swift in Sources */,
 				BB5E58C925D9D8F80031FEAD /* Price+CoreDataClass.swift in Sources */,

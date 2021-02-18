@@ -35,7 +35,7 @@ class StockListViewModel: ObservableObject {
             addStock(symbol: "AAPL", stockName: "Apple")
             addStock(symbol: "BCRX", stockName: "Bio")
             addStock(symbol: "TSLA", stockName: "Tesla")
-            addStock(symbol: "ELY", stockName: "Calloway")
+            addStock(symbol: "ELY", stockName: "Callaway")
             addStock(symbol: "GME", stockName: "GameStop")
             UserDefaults.standard.set(true, forKey: "isStocksLoaded")
             print("first Load")
@@ -65,6 +65,7 @@ class StockListViewModel: ObservableObject {
     }
 
     func loadStockPrices(symbol: String) {
+        self.state = .loading
         stockNetwork.loadDailyPrices(withSymbol: symbol) { [weak self] result in
             switch result {
             case .success(let chartData):
@@ -78,6 +79,7 @@ class StockListViewModel: ObservableObject {
     }
 
     func loadStockWeeklyPrices(symbol: String) {
+        self.state = .loading
         stockNetwork.loadWeeklyPrices(withSymbol: symbol) { [weak self] result in
             switch result {
             case .success(let chartData):
@@ -91,6 +93,7 @@ class StockListViewModel: ObservableObject {
     }
 
     func loadMonthlyStockPrices(symbol: String, interval: String) {
+        self.state = .loading
         stockNetwork.loadMonthlyPrices(withSymbol: symbol, withInterval: interval) { [weak self] result in
             switch result {
             case .success(let chartData):
@@ -104,6 +107,7 @@ class StockListViewModel: ObservableObject {
     }
 
     func loadYearlyStockPrices(symbol: String, interval: String) {
+        self.state = .loading
         stockNetwork.loadYearlyPrices(withSymbol: symbol, withInterval: interval) { [weak self] result in
             switch result {
             case .success(let chartData):

@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct StockHome: View {
-    @State var stockViewModel: StockListViewModel
+    @ObservedObject var stockViewModel: StockListViewModel
 
     @Binding var stocks: [Stock]
 
@@ -17,10 +17,18 @@ struct StockHome: View {
         NavigationView {
             List {
                 ForEach(stocks) { stock in
+//                    let stockView = StockView(
+//                        symbol: stock.symbol,
+//                        price: String(stock.currPrice),
+//                        change: String(stock.change),
+//                        changePercent: String(stock.changePercent))
                     ZStack {
                         NavigationLink(
                             destination:
-                                LineView(stock: stock, stockViewModel: stockViewModel)
+                                LineView(
+                                    stockView: stock.stockView,
+                                    stockName: stock.stockName,
+                                    stockViewModel: stockViewModel)
                         ) {
                             StockRow(symbol: stock.symbol,
                                      stockName: stock.stockName,

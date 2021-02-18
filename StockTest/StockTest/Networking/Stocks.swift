@@ -118,6 +118,7 @@ class Stocks: ObservableObject, Identifiable {
                             index += 1
 
                             self.addPrice(with: stock, symbol: withSymbol, interval: nil)
+
                         }
                     }
                 }
