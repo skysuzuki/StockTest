@@ -23,10 +23,9 @@ class Stocks: ObservableObject, Identifiable {
     private let moc = PersistenceController.shared.container
 
     @Published var stockView: StockView?
+    @Published var searchText = ""
     @Published var prices = [Double]()
     @Published var pointPrices = [CGPoint]()
-    @Published var finishedFetching = false
-    @Published private(set) var state = false
     @Published var currentPrice = "...."
     @Published var searchResults = [StockSearchResult]()
 
@@ -36,6 +35,26 @@ class Stocks: ObservableObject, Identifiable {
     var stockViewDispatchGroup = DispatchGroup()
     private var apikey = "C0A7LMCK12GYH6UZ"
     //private var apikey = "00HW87JZWQ30BPUN"
+
+    init() {
+        $searchText
+            .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
+            .removeDuplicates()
+            .map( {(string) -> String? in
+                if string.count < 1 {
+                    self.searchResults = []
+                    return nil
+                }
+
+                return string
+            })
+            .compactMap{ $0 }
+            .sink { _ in
+
+            } receiveValue: { [self] searchField in
+                searchStocks(searchField)
+            }.store(in: &cancellable)
+    }
 
     struct Response<T> {
         let value: T
@@ -200,6 +219,7 @@ class Stocks: ObservableObject, Identifiable {
 
                 DispatchQueue.main.async {
                     self.searchResults = value.bestMatches
+                    print(self.searchResults.count)
                 }
             })
             .store(in: &cancellable)

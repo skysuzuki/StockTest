@@ -14,11 +14,11 @@ struct SearchRow: View {
     var body: some View {
         HStack {
             Text(symbol)
-                .font(.custom("Arial", size: 22))
+                .font(.custom("Arial", size: 20))
                 .foregroundColor(Color.black)
             Spacer()
             Text(stockName)
-                .font(.custom("Arial", size: 22))
+                .font(.custom("Arial", size: 18))
                 .foregroundColor(Color.gray)
         }
     }

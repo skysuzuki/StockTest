@@ -33,8 +33,7 @@ struct ContentView: View {
                         Label("Home", systemImage: "house")
                     }
                     .tag(Tab.home)
-                SearchHome(stockResults: $stockModel.stockNetwork.searchResults,
-                           stock: stockModel.stockNetwork)
+                SearchHome(stockNetwork: stockModel.stockNetwork, stockResults: stockModel.stockNetwork.searchResults)
                     .tabItem {
                         Label("Search", systemImage: "magnifyingglass")
                     }

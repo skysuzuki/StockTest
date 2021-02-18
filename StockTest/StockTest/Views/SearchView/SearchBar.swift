@@ -14,27 +14,21 @@ struct SearchBar: UIViewRepresentable {
 
     @Binding var text: String
 
-    let stock: Stocks
-
     class Coordinator: NSObject, UISearchBarDelegate {
 
         @Binding var text: String
 
-        let stock: Stocks
-
-        init(text: Binding<String>, stock: Stocks) {
+        init(text: Binding<String>) {
             _text = text
-            self.stock = stock
         }
 
         func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
             text = searchText
-            self.stock.searchStocks(searchText)
         }
     }
 
     func makeCoordinator() -> SearchBar.Coordinator {
-        return Coordinator(text: $text, stock: stock)
+        return Coordinator(text: $text)
     }
 
     func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {

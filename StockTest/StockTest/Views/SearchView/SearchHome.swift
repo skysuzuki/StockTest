@@ -9,18 +9,18 @@ import SwiftUI
 
 struct SearchHome: View {
 
-    @State private var searchText: String = ""
+    @ObservedObject var stockNetwork: Stocks
 
-    @Binding var stockResults: [StockSearchResult]
+    //@State private var searchText: String = ""
 
-    let stock: Stocks
+    var stockResults: [StockSearchResult] = []
 
     var body: some View {
         NavigationView {
             VStack {
-                SearchBar(text: $searchText, stock: stock)
+                SearchBar(text: $stockNetwork.searchText)
                 List {
-                    ForEach(stockResults, id: \.self) { stock in
+                    ForEach( stockNetwork.searchResults, id: \.self) { stock in
                         SearchRow(symbol: stock.symbol, stockName: stock.name)
                     }
                 }
@@ -34,6 +34,6 @@ struct SearchHome: View {
 
 struct SearchHome_Previews: PreviewProvider {
     static var previews: some View {
-        SearchHome(stockResults: .constant([StockSearchResult(symbol: "TSLA", name: "TESLA")]), stock: Stocks())
+        SearchHome(stockNetwork: Stocks(), stockResults:[StockSearchResult(symbol: "TSLA", name: "TESLA")])
     }
 }
