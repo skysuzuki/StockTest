@@ -25,6 +25,19 @@ struct SearchBar: UIViewRepresentable {
         func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
             text = searchText
         }
+
+        func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+            searchBar.endEditing(true)
+        }
+
+        func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+            searchBar.endEditing(true)
+        }
+
+        func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+            searchBar.endEditing(true)
+        }
+
     }
 
     func makeCoordinator() -> SearchBar.Coordinator {

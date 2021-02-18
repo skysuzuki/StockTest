@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SwiftUICharts
+
 
 struct StockHome: View {
     @State var stockViewModel: StockListViewModel

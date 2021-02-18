@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		639877C9EB39827B7E8B5689 /* Pods_StockTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39FDEF4586AA58B83D0FDACD /* Pods_StockTest.framework */; };
+		BB07F50325DE378F000219D5 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB07F50225DE378F000219D5 /* UIApplication+Extension.swift */; };
 		BB37A98425D514A300E5E4DC /* StockTestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB37A98325D514A300E5E4DC /* StockTestApp.swift */; };
 		BB37A98625D514A300E5E4DC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB37A98525D514A300E5E4DC /* ContentView.swift */; };
 		BB37A98825D514A700E5E4DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB37A98725D514A700E5E4DC /* Assets.xcassets */; };
@@ -41,6 +42,7 @@
 		39FDEF4586AA58B83D0FDACD /* Pods_StockTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StockTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4716E295BE471AAF357209A8 /* Pods-StockTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockTest.release.xcconfig"; path = "Target Support Files/Pods-StockTest/Pods-StockTest.release.xcconfig"; sourceTree = "<group>"; };
 		76A35AC5ADE0E81B36EF0606 /* Pods-StockTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockTest.debug.xcconfig"; path = "Target Support Files/Pods-StockTest/Pods-StockTest.debug.xcconfig"; sourceTree = "<group>"; };
+		BB07F50225DE378F000219D5 /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
 		BB37A98025D514A300E5E4DC /* StockTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StockTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB37A98325D514A300E5E4DC /* StockTestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockTestApp.swift; sourceTree = "<group>"; };
 		BB37A98525D514A300E5E4DC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 			children = (
 				BB37A99D25D5AB5A00E5E4DC /* String+Extension.swift */,
 				BB5E58CF25DA07CA0031FEAD /* StockSymbols.swift */,
+				BB07F50225DE378F000219D5 /* UIApplication+Extension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 				BB37A9C325D5D60F00E5E4DC /* StockView.swift in Sources */,
 				BB5E587025D770450031FEAD /* SearchBar.swift in Sources */,
 				BB5E58CA25D9D8F80031FEAD /* Price+CoreDataProperties.swift in Sources */,
+				BB07F50325DE378F000219D5 /* UIApplication+Extension.swift in Sources */,
 				BB5E586425D735C10031FEAD /* StockListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
