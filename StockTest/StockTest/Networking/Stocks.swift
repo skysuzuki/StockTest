@@ -117,7 +117,13 @@ class Stocks: ObservableObject, Identifiable {
                             chartData.append(ChartDataEntry(x: index, y: stock))
                             index += 1
 
-                            self.addPrice(with: stock, symbol: withSymbol, interval: nil)
+
+                            let isAdded = StockSymbol.allCases.first { symbol in
+                                withSymbol == symbol.rawValue
+                            }
+                            if isAdded != nil {
+                                self.addPrice(with: stock, symbol: withSymbol, interval: nil)
+                            }
 
                         }
                     }
@@ -185,7 +191,12 @@ class Stocks: ObservableObject, Identifiable {
                             chartData.append(ChartDataEntry(x: index, y: stock))
                             index += 1
 
-                            self.addPrice(with: stock, symbol: withSymbol, interval: nil)
+                            let isAdded = StockSymbol.allCases.first { symbol in
+                                withSymbol == symbol.rawValue
+                            }
+                            if isAdded != nil {
+                                self.addPrice(with: stock, symbol: withSymbol, interval: nil)
+                            }
                         }
                     }
                 }
@@ -412,74 +423,6 @@ class Stocks: ObservableObject, Identifiable {
         }
     }
 
-    // Functionc call to fetch stock data for 1 Day and 1 week
-//    func fetchStockPrice(_ symbol: String) {
-//
-//        var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
-//        urlComponents?.queryItems = [
-//            URLQueryItem(name: "function", value: stockFunction.intraday.rawValue),
-//            URLQueryItem(name: "symbol", value: symbol),
-//            URLQueryItem(name: "interval", value: "5min"),
-//            URLQueryItem(name: "apikey", value: apikey)
-//        ]
-//
-//        guard let url = urlComponents?.url else { return }
-//        var requestURL = URLRequest(url: url)
-//        requestURL.httpMethod = "GET"
-//
-//        URLSession.shared.dataTaskPublisher(for: requestURL)
-//            .map { output in
-//                return output.data
-//            }
-//            .decode(type: StocksMinute.self, decoder: JSONDecoder())
-//            .sink(receiveCompletion: { result in
-//                switch result {
-//                case .failure(let error):
-//                    print("Handle \(error)")
-//                case .finished:
-//                    print("completed \(self.id)")
-//                    break
-//                }
-//            }) { value in
-//
-//                var stockPrices = [Double]()
-//                var pointData = [CGPoint]()
-//
-//                let orderedDates = value.timeSeriesMinute?.sorted {
-//                    guard let d1 = $0.key.stringDateMinute, let d2 = $1.key.stringDateMinute else { return false }
-//                    return d1 < d2
-//                }
-//
-//                guard let stockData = orderedDates else { return }
-//
-//                self.removePrices(symbol: symbol, interval: nil)
-//
-//                var index: Double = 1
-//                for(_, stock) in stockData {
-//                    if let stock = Double(stock.close) {
-//                        if stock > 0.0 {
-//                            stockPrices.append(stock)
-//
-//                            pointData.append(CGPoint(x: index, y: stock))
-//                            index += 1
-//
-//                            self.addPrice(with: stock, symbol: symbol, interval: nil)
-//                        }
-//                    }
-//                }
-//
-//                DispatchQueue.main.async {
-//                    self.prices = stockPrices
-//                    self.pointPrices = pointData
-//                    self.state = true
-//                    self.finishedFetching = true
-//                    print("fetch:\(stockPrices)")
-//                    self.currentPrice = stockData.last?.value.close ?? ""
-//                }
-//            }
-//            .store(in: &cancellable)
-//    }
-
     // Fetch stocks for yearly prices - Use "1M" or "3M" for interval string
     func loadMonthlyPrices(withSymbol: String, withInterval: String, completion: @escaping (Result<[ChartDataEntry], Error>) -> Void) {
 
@@ -524,7 +467,12 @@ class Stocks: ObservableObject, Identifiable {
                                 chartData.append(ChartDataEntry(x: index, y: stock))
                                 index += 1
 
-                                self.addPrice(with: stock, symbol: withSymbol, interval: withInterval)
+                                let isAdded = StockSymbol.allCases.first { symbol in
+                                    withSymbol == symbol.rawValue
+                                }
+                                if isAdded != nil {
+                                    self.addPrice(with: stock, symbol: withSymbol, interval: withInterval)
+                                }
                             }
                         }
                     }
@@ -580,7 +528,12 @@ class Stocks: ObservableObject, Identifiable {
                                 chartData.append(ChartDataEntry(x: index, y: stock))
                                 index += 1
 
-                                self.addPrice(with: stock, symbol: withSymbol, interval: withInterval)
+                                let isAdded = StockSymbol.allCases.first { symbol in
+                                    withSymbol == symbol.rawValue
+                                }
+                                if isAdded != nil {
+                                    self.addPrice(with: stock, symbol: withSymbol, interval: withInterval)
+                                }
                             }
                         }
                     }

@@ -17,11 +17,6 @@ struct StockHome: View {
         NavigationView {
             List {
                 ForEach(stocks) { stock in
-//                    let stockView = StockView(
-//                        symbol: stock.symbol,
-//                        price: String(stock.currPrice),
-//                        change: String(stock.change),
-//                        changePercent: String(stock.changePercent))
                     ZStack {
                         NavigationLink(
                             destination:
