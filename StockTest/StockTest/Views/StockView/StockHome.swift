@@ -23,6 +23,7 @@ struct StockHome: View {
                                 LineView(
                                     stockView: stock.stockView,
                                     stockName: stock.stockName,
+                                    chartPrice: String(stock.currPrice),
                                     stockViewModel: stockViewModel)
                         ) {
                             StockRow(symbol: stock.symbol,

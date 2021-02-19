@@ -13,6 +13,12 @@ struct Line: UIViewRepresentable {
 
     var entries : [ChartDataEntry]
 
+    @Binding var chartValue: String
+    @State var isSelectingValue = false
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(value: $chartValue, selectingValue: $isSelectingValue)
+    }
 
     func makeUIView(context: Context) -> LineChartView {
         //crate new chart
@@ -28,10 +34,10 @@ struct Line: UIViewRepresentable {
         chart.rightAxis.drawLabelsEnabled = false
         chart.rightAxis.drawGridLinesEnabled = false
         chart.rightAxis.drawAxisLineEnabled = false
-        chart.animate(xAxisDuration: 2.0)
+        //chart.animate(xAxisDuration: 2.0)
         chart.fitScreen()
+        chart.delegate = context.coordinator
         chart.data = addData()
-
 
         return chart
     }
@@ -40,7 +46,9 @@ struct Line: UIViewRepresentable {
     func updateUIView(_ uiView: LineChartView, context: Context) {
         //when data changes chartd.data update is required
         uiView.data = addData()
-        uiView.animate(xAxisDuration: 2.0)
+        if !isSelectingValue {
+            uiView.animate(xAxisDuration: 2.0)
+        }
     }
 
     func addData() -> LineChartData {
@@ -57,6 +65,22 @@ struct Line: UIViewRepresentable {
         return data
     }
 
+    class Coordinator: NSObject, ChartViewDelegate {
+
+        @Binding var chartValue: String
+        @Binding var isSelectingValue: Bool
+
+        init(value: Binding<String>, selectingValue: Binding<Bool>) {
+            _chartValue = value
+            _isSelectingValue = selectingValue
+        }
+
+        func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+            chartValue = String(entry.y)
+            isSelectingValue = true
+        }
+    }
+
     //typealias UIViewType = LineChartView
 }
 
@@ -66,6 +90,7 @@ struct Line_Previews: PreviewProvider {
             ChartDataEntry(x: 1, y: 10),
             ChartDataEntry(x: 2, y: 5),
             ChartDataEntry(x: 3, y: 20)
-        ])
+        ],
+        chartValue: .constant("Test") )
     }
 }

@@ -24,6 +24,7 @@ struct LineView: View {
     var stockView: StockView
     var stockName: String
 
+    @State var chartPrice: String
     @ObservedObject var stockViewModel: StockListViewModel
     
 
@@ -36,7 +37,7 @@ struct LineView: View {
                     .font(.title)
                     .bold()
                 //Text(String(format: "%.2f", stock.currPrice))
-                Text(stockView.price)
+                Text(chartPrice)
                     .font(.subheadline)
                     .offset(x: 5, y: 0)
                 HStack {
@@ -65,7 +66,8 @@ struct LineView: View {
                 case .failed(let _):
                     EmptyView()
                 case .loaded(let points):
-                    Line(entries: points)
+                    Line(entries: points,
+                         chartValue: $chartPrice)
                 }
                 HStack(alignment: .center) {
                     ForEach(intervals, id: \.self) { interval in
@@ -126,6 +128,7 @@ struct LineView_Previews: PreviewProvider {
                 change: "",
                 changePercent: ""),
             stockName: "Corsair",
+            chartPrice: "0.0",
             stockViewModel: StockListViewModel())
     }
 }

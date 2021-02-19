@@ -28,7 +28,7 @@ struct SearchHome: View {
                                             price: "0.0",
                                             change: "0.0",
                                             changePercent: "0.0"),
-                                        stockName: stockResult.name, stockViewModel: stockViewModel))
+                                        stockName: stockResult.name, chartPrice: "0.0", stockViewModel: stockViewModel))
                                     {
                                         SearchRow(
                                             symbol: stockResult.symbol,
